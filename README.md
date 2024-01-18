@@ -4,3 +4,5 @@
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
 
 https://angeloyeo.github.io/2020/09/14/normal_distribution_derivation.html -> exponential 내부의 식 유도전까지 공부함
+
+책 : https://www.yes24.com/Product/Goods/117709828
