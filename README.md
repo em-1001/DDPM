@@ -10,3 +10,6 @@ https://angeloyeo.github.io/2020/09/14/normal_distribution_derivation.html -> ex
 #### MLE
 https://modernflow.tistory.com/67  
 https://everyday-tech.tistory.com/entry/%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84-%EC%B6%94%EC%A0%95%EB%B2%95Maximum-Likelihood-Estimation
+
+#### 나이브 베이즈 분류기 
+https://ko.wikipedia.org/wiki/%EB%82%98%EC%9D%B4%EB%B8%8C_%EB%B2%A0%EC%9D%B4%EC%A6%88_%EB%B6%84%EB%A5%98
