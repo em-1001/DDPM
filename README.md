@@ -25,3 +25,4 @@ VAE : https://huidea.tistory.com/296  , https://deepinsight.tistory.com/127 이�
 
 ## 목표 
 stable-diffusion from scratch 영상을 따라 코딩해보고(직접 구현할 수 있는건 직접 구현), 원하는 이미지를 구해서 커스텀 학습시켜보기 
+VAE -> CLIP -> U-Net -> DDPM 순으로 직접 구현해보기 
