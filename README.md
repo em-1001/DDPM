@@ -1,4 +1,4 @@
-# Stable-Diffusion
+# Stable Diffusion
 ## VAE
 
 ## DDPM
