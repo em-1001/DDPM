@@ -26,7 +26,7 @@ ELBO 식에서 $\log p(x)$가 빠져나오는 이유는 $\int q(z) = 1$이기 �
 
 VAE : https://huidea.tistory.com/296  , https://deepinsight.tistory.com/127 이걸로 낼 공부 ㄱㄱ
 
-레전드 강의 : https://www.youtube.com/watch?v=o_peo6U7IRM (1:13:57)
+레전드 강의2 -> 33:10
 
 
 ## 목표 
