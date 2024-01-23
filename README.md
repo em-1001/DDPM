@@ -1,5 +1,8 @@
 # Stable Diffusion
 ## VAE
+VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
+Latent Variable $z$와 Target data $x$가 있다고 할 때, training data에 있는 $x$가 나올 확률을 구하는데, 그 확률이 모든 training data에 대해 maximize하는 확률분포를 찾는것이 목표이다. 강의1 -> 42:27
+
 
 ## DDPM
 
