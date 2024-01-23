@@ -36,4 +36,4 @@ VAE -> CLIP -> U-Net -> DDPM 순으로 직접 구현해보기
 ### VAE 구현
 https://avandekleut.github.io/vae/
 
-언데드 언럭
+언데드 언럭(ㅋㄹ ㅈㅌㅍ
