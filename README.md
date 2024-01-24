@@ -1,8 +1,7 @@
 # Stable Diffusion
 ## VAE
 VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
-Latent Variable $z$와 Target data $x$가 있다고 할 때, training data에 있는 $x$가 나올 확률을 구하는데, 그 확률이 모든 training data에 대해 maximize하는 확률분포를 찾는것이 목표이다. 강의1 -> 42:27
-
+MLE(Maximum Likelihood Estimation)관점에서의 모델의 학습에 대해 먼저 설명하면 input $z$와 target $x$가 있을 때, $f_{\theta}(\cdot)$ 은 모델의 종류가 되고, 최종 목표는 정해진 확률분포에서 target이 나올 확률인 $p(x | f_{\theta}(z))$가 최대가 되도록 하는 것이다. 따라서 MLE에서는 학습전에 확률분포(가우시안, 베르누이 등)를 먼저 정하게 되고, 모델의 출력은 이 확률 분포를 정하기 위한 파라미터(가우시안의 경우 $\mu, \sigma$)라고 해석할 수 있다. 
 
 ## DDPM
 
