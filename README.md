@@ -9,6 +9,9 @@ VAE의 Decoder도 위와 비슷하다. Encoder를 통해 sampling된 데이터 $
 다시 돌아와서 결과적으로 VAE의 목적은 모든 training data $x$에 대해 $x$가 나올 확률 $p(x)$를 구하는 것이 목적이다. 이때 training data에 있는 sample과 유사한 sample을 생성하기 위해서 prior 값을 이용하는데, 이 값이 Latent Variable인 $z$가 나올 확률 $p(z)$이고, $p(x)$는 $\int p(x | g_{\theta}(z))p(z) dz = p(x)$로 구해진다. 
 
 ### Prior Distribution 
+
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/2ab9f1aa-6e26-4c29-b6f8-eb9f40eb1f14"></p>
+
 앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 예를 들어 normal distribution으로 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. 이유는 모델이 DNN이기 때문에, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용된다는 것이다. 따라서 이러한 이유로 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
 
 
@@ -50,3 +53,7 @@ VAE -> CLIP -> U-Net -> DDPM 순으로 직접 구현해보기
 https://avandekleut.github.io/vae/
 
 언데드 언럭(ㅋㄹ ㅈㅌㅍ
+
+# Reference
+## Paper
+Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf  
