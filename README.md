@@ -32,8 +32,13 @@ $p(z|x)$가 무엇인지 알지 못하기 때문에, 이미 알고 있는 확률
 
 우선 $\log(p(x))$에서 시작해서 ELBO를 유도하는 과정을 정리하면 아래와 같다. 
  
-14:52
-
+$$\begin{aligned}
+\log(p(x)) &= \int \log(p(x))\color{blueviolet}q_{\phi}(z|x)dz 　 \color{black}\leftarrow \color{blueviolet}\int q_{\phi}(z|x)dz = 1 \\ 
+&=\int \log\left(\color{blueviolet}\frac{p(x, z)}{p(z|x)}\color{black}\right)q_{\phi}(z|x)dz 　 \leftarrow \color{blueviolet}p(x) = \frac{p(x, z)}{p(z|x)} \\
+&=\int \log\left(\frac{p(x, z)}{\color{blueviolet}q_{\phi}(z|x)\color{black}}\cdot\frac{\color{blueviolet}q_{\phi}(z|x)\color{black}}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
+&=\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz + \int \log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
+&　　　　　\color{red}ELBO(\phi)　　　　　　\color{blue}KL\left(q_{\phi}(z|x) || p(z|x)\right)
+\end{aligned}$$
 
 
 ## DDPM
