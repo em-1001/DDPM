@@ -44,10 +44,13 @@ $$\begin{aligned}
 여기서 $KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$ term은 Kullback–Leibler divergence로 두 확률분포 간의 거리($\ge$)를 구한다.
 우리가 원하는 건 $q_{\phi}(z|x)$가 $p(z|x)$에 최대한 가까워 져야 하므로 $KL$을 최소화 하는 $q_{\phi}(z|x)$의 $\phi$를 찾아야 하는데 $p(z|x)$를 모르기 때문에 KL을 최소화 하는 대신 $ELBO$를 최대화 하는 $\phi$를 찾으면 된다. 
 
+$$ \log(p(x)) = ELBO(\phi) + KL(\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$$ 
+
+$$q_{\phi^*}(z|x) = \underset{\phi}{\arg\max} \ ELBO(\phi)$$
+
+18:42
+
 ## DDPM
-
-
-
 
 ### 통계학
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
