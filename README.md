@@ -38,7 +38,7 @@ $$\begin{aligned}
 &=\int \log\left(\frac{p(x, z)}{\color{blueviolet}q_{\phi}(z|x)\color{black}}\cdot\frac{\color{blueviolet}q_{\phi}(z|x)\color{black}}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
 &=\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz + \int \log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
 \\ 
-&　　　　 　\color{red}ELBO(\phi)　　　　 　　\color{blue}KL\left(q_{\phi}(z|x) || p(z|x)\right)
+&　　　 　 　\color{red}ELBO(\phi)　　　　 　　\color{blue}KL\left(q_{\phi}(z|x) || p(z|x)\right)
 \end{aligned}$$
 
 
