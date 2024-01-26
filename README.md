@@ -41,6 +41,7 @@ $$\begin{aligned}
 &　　　 　 　\color{red}ELBO(\phi)　　　　 　　\color{blue}KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)
 \end{aligned}$$
 
+여기서 $KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$ term은 Kullback–Leibler divergence로 두 확률분포 간의 거리($\ge$)를 구한다.
 
 ## DDPM
 
