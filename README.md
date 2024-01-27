@@ -105,7 +105,17 @@ $$KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right) = \frac{1}{2}\sum_{j=1}^J\left(\mu_
 $J$ : dimension  
 $\mu, \sigma$ : $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$
 
-문제는 Reconstruction  Error term인데, 
+Reconstruction  Error term의 경우 원래라면 아래처럼 기댓값을 구할 때 적분을 해야하지만, 대신 Monte Carlo method로 $L$개를 sampling하여 구한다. 
+
+$$\begin{aligned}
+\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] &= \int \log(p_{\theta}(x_i|z))q_{\phi}(z|x_i)dz \\ 
+&\approx \frac{1}{L}\sum_{z^{i,l}} \log\left(p_{\theta}(x_i|z^{i,l})\right)
+\end{aligned}$$
+
+이때 문제는 $q_{\phi}$에서 random으로 sampling을 하기 때문에 backpropagation에서의 편미분이 불가능하다는 것이다. 그래서 이를 해결하기 위해 reparameterization trick을 사용하는데, 이는 gaussian distribution이 gaussian distribution대신 normal distribution에서 sampling한 $\epsilon$에 대해 아래처럼 표현될 수 있다는 점을 이용하여 backpropagation이 가능하도록 한 것이다. 
+
+$$z^{i,l} \sim \mathcal{N}(\mu_i, \sigma_i^2I) 　\to　 z^{i,l} = \mu_i + \sigma_i^2 \odot \epsilon 　　\epsilon \sim \mathcal{N}(0,1)$$
+
 
 ## DDPM
 
