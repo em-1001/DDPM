@@ -78,6 +78,7 @@ $$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\
 
 결국 위 두 Optimization Problem을 종합하는 식이 위와 같고, 이 식이 $ELBO$를 최대화하는 것과 같게 된다. 
 
+정리해서 이상적으로 sampling을 해주는 $q_{\phi}(z|x)$를 Encoder, Posterior, Inference Network 등으로 부르고, sampling된 $z$로 부터 이미지를 generate 해주는 $g_{\theta}(x|z)$를 Decoder, Generator, Generation Network 등으로 부른다. 
 
 
 ## DDPM
