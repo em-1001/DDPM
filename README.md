@@ -116,6 +116,7 @@ $$\begin{aligned}
 
 $$z^{i,l} \sim \mathcal{N}(\mu_i, \sigma_i^2I) 　\to　 z^{i,l} = \mu_i + \sigma_i^2 \odot \epsilon 　　\epsilon \sim \mathcal{N}(0,1)$$
 
+이렇게 하면 확률분포적인 특성에서는 같지만 backpropagation에서는 문제가 없게 된다. 
 
 ## DDPM
 
