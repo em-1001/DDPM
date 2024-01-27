@@ -21,7 +21,7 @@ $p(x | g_{\theta}(z))$의 likelihood가 최대가 되는 것이 목표라면 Max
 
 $$||x - z_{bad}||^2 < ||x - z_{good}||^2 \to p(x | g_{\theta}(z_{bad})) > p(x | g_{\theta}(z_{good}))$$
 
-예를 들면 원래 고양이 이미지에서 일부분이 조금 잘린 이미지 a와 한 pixel씩 옆으로 이동한 이미지 b가 있다고 하면 b는 pixel만 옆으로 밀렸을 뿐 고양이 그대로 이지만 a는 이미지가 잘렸기 때문에 의미적으론 b가 a보다 고양이에 가까운데, MSE 관점에서는 b의 loss가 더 크게 나오게 된다. 
+예를 들면 원래 고양이 이미지에서 일부분이 조금 잘린 이미지 $a$와 한 pixel씩 옆으로 이동한 이미지 $b$가 있다고 하면 $b$는 pixel만 옆으로 밀렸을 뿐 고양이 그대로 이지만 $a$는 이미지가 잘렸기 때문에 의미적으론 $b$가 $a$보다 고양이에 가까운데, MSE 관점에서는 $b$의 loss가 더 크게 나오게 된다. 
 
 이러한 문제를 해결하기 위해 Variational Inference가 나오게 된다. 기존 prior에서 sampling을 하니 학습이 잘 안되니까 $z$를 prior에서 sampling하지 말고 target인 $x$와 유사한 sample이 나올 수 있는 이상적인 확률분포 $p(z|x)$로 부터 sampling한다. 이때 우리는 
 $p(z|x)$가 무엇인지 알지 못하기 때문에, 이미 알고 있는 확률 분포(가우시안..) $q_{\phi}(z|x)$를 임의로 택하고 그것의 파라미터 $\phi$를 조정하여 $p(z|x)$와 유사하게 되도록 하는 것이다. 그렇게 이상적인 확률분포에 근사된 $q_{\phi}$를 통해서 $z$를 sampling하게 된다. $p(z|x) \approx q_{\phi}(z|x) \sim z$
@@ -80,6 +80,32 @@ $$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\
 
 정리해서 이상적으로 sampling을 해주는 $q_{\phi}(z|x)$를 Encoder, Posterior, Inference Network 등으로 부르고, sampling된 $z$로 부터 이미지를 generate 해주는 $g_{\theta}(x|z)$를 Decoder, Generator, Generation Network 등으로 부른다. 
 
+### Loss Function 
+결과적으로 ELBO를 최대화 하기 위한 Loss는 아래와 같이 표현된다. 
+
+$$L_i(\phi, \theta, x_i) = -\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] + KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$ 
+
+Reconstruction  Error : $-\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right]$  
+Regularization : $KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$  
+
+Reconstruction  Error term은 앞서 말했던 MSE(가우시안의 경우)로 계산되는 부분이다. 해당 term을 결론적으로 보면 $x$를 넣었을 때 $x$가 나올 확률에 대한 것이기 때문에 Reconstruction  Error라고 한다. 만약 가정을 베르누이 분포라고 하면 MSE가 아닌 Cross Entropy가 된다. 
+
+Regularization는 같은 Reconstruction  Error를 갖는 $q_{\phi}$가 여럿 있다면, 그 중에서도 prior $p(z)$와 가까운 $q_{\phi}$를 고르라는 것으로, 생성 데이터에 대한 통제 조건을 prior에 부여하고, 이와 유사해야 한다는 조건을 부여한 것이다. 
+
+그럼 이제 $ELBO$를 실제 어떻게 계산하는지 알아보기 전에 $q_{\phi}$를 gaussian distribution $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z)$를 normal distribution $p(z) \sim N(0, 1)$으로 가정한다고 하자. 
+
+우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence가 아래와 같이 계산된다고 수학적으로 알려져있다. 
+
+$$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left(\sum_1^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T \sum_1^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
+
+이에 따라 앞서 가정한대로 KL term을 계산하면 아래와 같이 된다.
+
+$$KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right) = \frac{1}{2}\sum_{j=1}^J\left(\mu_{i,j}^2 + \sigma_{i,j}^2 - \ln(\sigma_{i,j}^2) - 1\right)$$
+
+$J$ : dimension  
+$\mu, \sigma$ : $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$
+
+문제는 Reconstruction  Error term인데, 
 
 ## DDPM
 
