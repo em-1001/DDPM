@@ -63,13 +63,20 @@ ELBO(\phi) &= \int \log \left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)d
 
 $$\log(p(x)) \ge \mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right] - KL\left(q_{\phi}(z|x) \ || \ p(z)\right) = ELBO(\phi)$$
 
+첫 번째로 $ELBO$를 maximize하는 $\phi$를 찾는데, 이 과정이 이상적인 sampling function을 찾는 것이다. 
+$\mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right]$는 $q_{\phi}$에서 sampling한 $z$에 대한 $\log\left(p(x|z)\right)$를 의미한다.  
+
 **Optimization Problem 2 on $\theta$: Maximum likelihood**
 
 $$-\sum_i \log(p(x_i)) \le -\sum_i \lbrace\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] - KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)\rbrace$$
 
+두 번째는 이상적인 sampling function을 찾았으므로 여기서 $z$를 sampling해서 $z$로 부터 target $x$가 나오게 하는 Conditional probability $p(x | g_{\theta}(z))$가 최대가 되도록 하는 확률분포를 찾는 것이다.    
+
 **Final Optimization Problem**
 
 $$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] - KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$
+
+결국 위 두 Optimization Problem을 종합하는 식이 위와 같고, 이 식이 $ELBO$를 최대화하는 것과 같게 된다. 
 
 
 
