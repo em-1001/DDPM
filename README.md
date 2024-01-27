@@ -63,7 +63,7 @@ ELBO(\phi) &= \int \log \left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)d
 
 $$\log(p(x)) \ge \mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right] - KL\left(q_{\phi}(z|x) \ || \ p(z)\right) = ELBO(\phi)$$
 
-첫 번째로 $ELBO$를 maximize하는 $\phi$를 찾는데, 이 과정이 이상적인 sampling function을 찾는 것이다. 
+첫 번째로 $ELBO$를 maximize하는 $\phi$를 찾는데, 이 과정이 이상적인 sampling function을 찾는 것이다.    
 $\mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right]$는 $q_{\phi}$에서 sampling한 $z$에 대한 $\log\left(p(x|z)\right)$를 의미한다.  
 
 **Optimization Problem 2 on $\theta$: Maximum likelihood**
