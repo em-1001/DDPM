@@ -44,11 +44,34 @@ $$\begin{aligned}
 여기서 $KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$ term은 Kullback–Leibler divergence로 두 확률분포 간의 거리($\ge 0$)를 구한다.
 우리가 원하는 건 $q_{\phi}(z|x)$가 $p(z|x)$에 최대한 가까워 져야 하므로 $KL$을 최소화 하는 $q_{\phi}(z|x)$의 $\phi$를 찾아야 하는데 $p(z|x)$를 모르기 때문에 KL을 최소화 하는 대신 $ELBO$를 최대화 하는 $\phi$를 찾으면 된다. 
 
-$$ \log(p(x)) = ELBO(\phi) + KL(\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$$ 
+$$\log(p(x)) = ELBO(\phi) + KL(\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$$ 
 
 $$q_{\phi^*}(z|x) = \underset{\phi}{\arg\max} \ ELBO(\phi)$$
 
-18:42
+$ELBO$를 최대화 하기 위해 $ELBO$ term을 다시 전개하면 다음과 같다. 
+
+$$\begin{aligned}
+ELBO(\phi) &= \int \log \left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz \\
+&= \int \log \left(\frac{p(x|z)p(z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz \\  
+&= \int \log \left(p(x|z)\right)q_{\phi}(z|x)dz - \int \log \left(\frac{q_{\phi}(z|x)}{p(z)}\right)q_{\phi}(z|x)dz \\ 
+&= \mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right] - KL\left(q_{\phi}(z|x) \ || \ p(z)\right)
+\end{aligned}$$
+
+그래서 정리하면 $ELBO$를 최대화 하는데 있어서 $\phi$, $\theta$로 총 2개에 대한 Optimization Problem을 해결해야 하고 이는 아래와 같다. 
+
+**Optimization Problem 1 on $\phi$: Variational Inference**
+
+$$\log(p(x)) \ge \mathbb{E}_ {q_{\phi}(z|x)} \left[\log\left(p(x|z)\right)\right] - KL\left(q_{\phi}(z|x) \ || \ p(z)\right) = ELBO(\phi)$$
+
+**Optimization Problem 2 on $\theta$: Maximum likelihood**
+
+$$-\sum_i \log(p(x_i)) \le -\sum_i \lbrace\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] - KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)\rbrace$$
+
+**Final Optimization Problem**
+
+$$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] - KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$
+
+
 
 ## DDPM
 
