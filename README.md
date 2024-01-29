@@ -128,9 +128,28 @@ $$\begin{aligned}
 &= \sum_{j=1}^D x_{i,j} \log p_{i,j} + (1-x_{i,j}) \log (1-p_{i,j})　\leftarrow Cross \ entropy
 \end{aligned}$$
 
-베르누이 분포 공부하기 ...
 
 ## DDPM
+### Diffusion Model
+Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward하고, backward에서는 noise를 제거하는 과정을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
+
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/04aa12ae-63b9-4191-8ff6-bf4462ef8083"></p>
+
+$x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같다. 
+
+$$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)　　\to　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
+
+이전 상태 $x_{t-1}$가 주어졌을 때 현재 상태 $x_t$가 될 확률 $q(x_t | x_{t-1})$의 확률 분포를 표현하면 $\mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)$가 된다. \beta$는 noise parameter로 
+
+https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
+
+여기서 $\beta_t$는 매우 작은 값으로 $x_{t-1}$에 $\sqrt{1-\beta_t}$를 곱해줌으로서 이전 단계의 값을 약간 감소시키고 $\beta_tI$로 noise를 조금 추가해 준다. 
+
+
+
+
+강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2  
+DDPM 수식 유도 : https://xoft.tistory.com/33  
 
 ### 통계학
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
