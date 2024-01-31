@@ -102,7 +102,7 @@ Regularization : $KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$
 
 Reconstruction  Error term은 앞서 말했던 MSE(가우시안의 경우)로 계산되는 부분이다. 해당 term을 결론적으로 보면 $x$를 넣었을 때 $x$가 나올 확률에 대한 것이기 때문에 Reconstruction  Error라고 한다. 만약 가정을 베르누이 분포라고 하면 MSE가 아닌 Cross Entropy가 된다. 
 
-Regularization는 같은 Reconstruction  Error를 갖는 $q_{\phi}$가 여럿 있다면, 그 중에서도 prior $p(z)$와 가까운 $q_{\phi}$를 고르라는 것으로, 생성 데이터에 대한 통제 조건을 prior에 부여하고, 이와 유사해야 한다는 조건을 부여한 것이다. 
+Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있다면, 그 중에서도 prior $p(z)$와 가까운 $q_{\phi}$를 고르라는 것으로, 생성 데이터에 대한 통제 조건을 prior에 부여하고, 이와 유사해야 한다는 조건을 부여한 것이다. 
 
 그럼 이제 $ELBO$를 실제 어떻게 계산하는지 알아보기 전에 $q_{\phi}$를 gaussian distribution $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z)$를 normal distribution $p(z) \sim N(0, 1)$으로 가정한다고 하자. 
 
@@ -153,6 +153,7 @@ Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distributi
 Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 Noising과정의 $q(x_t|x_{t-1})$의 값은 사전에 정의한 gaussian noise에 따라 계산하면 되지만, Denoising과정의 $q(x_{t-1}|x_t)$는 $q(x_t|x_{t-1})$로 부터 바로 계산해낼 수 없기 때문이다.   
 모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_{t-1}|x_t)$가 되도록 하는 것이 목표이다. 
 
+#### Diffusion Process
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/b81f9496-b945-41ad-987e-bce1d96098ca"></p>
 
 $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같으며 Markov Chain을 따른다. 
@@ -160,13 +161,30 @@ $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$�
 $$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)　　\to　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
 이때 주입되는 gaussian noise의 크기는 사전에 정의되며, $\beta_t$로 표기된다. $\beta_t$가 매우 작을 경우 Noising과정의 $q(x_t|x_{t-1})$가 가우시안이면, Denoising과정의 $q(x_{t-1}|x_t)$도 가우시안이라는 것이 이미 증명되었다.   
-$\beta_t$는 $t$가 커질 수록 값이 커지게 되고, 이에 따라 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산($\beta_tI$)역시 커지며 Noise가 증가하게 된다. 
+$\beta_t$는 $t$가 커질 수록 값이 커지게 설계되는데, scheduling 방식은 크게 **Linear scheduling, Sigmoid scheduling, Quadratic scheduling**으로 나뉜다. 이에 따라 $\beta_t$가 커질수록 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산($\beta_tI$)역시 커지며 Noise가 증가하게 된다. 
+
+Diffusion Process는 VAE와 유사하게 Reparameterization Trick으로 계산된다. 
+
+$$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI) = \sqrt{1-\beta_t}x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}　*\epsilon \sim \mathcal{N}(0,1)$$
+
+Diffusion Model은 original data $x_0$를 제외한 $x_1, ..., x_T$의 값들을 $x_0$에서 시작한 conditional gaussian에서 가져온 latent variable($x_1=z_1,x_2=z_2,..,x_T=z_T$)로 간주한다. 따라서 Diffusion Process는 conditional gaussian의 joint-distribution으로서, $x_0$를 조건부로한 latent variables($x_{1:T}$)를 생성하는 과정이라 할 수 있다. 
+
+$$\begin{aligned}
+q(x_{1:T}|x_0) &= \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\  
+&=q(x_1|x_0)q(x_2|x_1)q(x_3|x_2)...q(x_T|x_{T-1}) \\ 
+&=\frac{q(x_1,x_0)}{q(x_0)}\frac{q(x_2,x_1)}{q(x_1)}\cdots\frac{q(x_T,x_{T-1})}{q(x_{T-1})} \\   
+&=\frac{q(x_1,x_0)}{q(x_0)}\frac{q(x_2,x_1,x_0)}{q(x_1, x_0)}\cdots\frac{q(x_T,x_{T-1},...,x_1,x_0)}{q(x_{T-1},...,x_0)} 　\leftarrow Markov \ Chain \\ 
+&=\frac{q(x_T,x_{T-1},...,x_1,x_0)}{q(x_0)}
+\end{aligned}$$
+
+
+### DDPM Loss 
+#### Reverse Process
 
 23:15
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
 
-여기서 $\beta_t$는 매우 작은 값으로 $x_{t-1}$에 $\sqrt{1-\beta_t}$를 곱해줌으로서 이전 단계의 값을 약간 감소시키고 $\beta_tI$로 noise를 조금 추가해 준다. 
 
 
 
