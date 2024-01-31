@@ -148,15 +148,19 @@ Markov Chain은 Markov 성질을 갖는 이산시간 확률과정을 의미한�
 $$P(S_{t+1}|S_t) = P(S_{t+1}|S_1,...,S_t)$$
 
 ### Diffusion Model
-Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward(Noising)하고, backward에서는 이를 다시 복원하는 noise 제거과정(Denoising)을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
+Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward(Noising)하고, backward에서는 이를 다시 복원하는 noise 제거과정(Denoising)을 학습하여 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
+
+Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 Noising과정의 $q(x_t|x_{t-1})$의 값은 사전에 정의한 gaussian noise에 따라 계산하면 되지만, Denoising과정의 $q(x_{t-1}|x_t)$는 $q(x_t|x_{t-1})$로 부터 바로 계산해낼 수 없기 때문이다.   
+모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_{t-1}|x_t)$가 되도록 하는 것이 목표이다. 
 
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/b81f9496-b945-41ad-987e-bce1d96098ca"></p>
 
-$x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같다. 
+$x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같으며 Markov Chain을 따른다. 
 
 $$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)　　\to　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
-이전 상태 $x_{t-1}$가 주어졌을 때 현재 상태 $x_t$가 될 확률 $q(x_t | x_{t-1})$의 확률 분포를 표현하면 $\mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)$가 된다. \beta$는 noise parameter로 
+이때 주입되는 gaussian noise의 크기는 사전에 정의되며, $\beta_t$로 표기된다. $\beta_t$가 매우 작을 경우 Noising과정의 $q(x_t|x_{t-1})$가 가우시안이면, Denoising과정의 $q(x_{t-1}|x_t)$도 가우시안이라는 것이 이미 증명되었다.   
+$\beta_t$는 $t$가 커질 수록 값이 커지게 되고, 이에 따라 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산(\beta_tI)역시 커지며 Noise가 증가하게 된다. 
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
 
