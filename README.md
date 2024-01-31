@@ -137,7 +137,7 @@ $$\begin{aligned}
 ### Diffusion Model
 Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward하고, backward에서는 noise를 제거하는 과정을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
 
-<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/04aa12ae-63b9-4191-8ff6-bf4462ef8083"></p>
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/b81f9496-b945-41ad-987e-bce1d96098ca"></p>
 
 $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같다. 
 
