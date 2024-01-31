@@ -1,6 +1,16 @@
 # Stable Diffusion
 ## VAE
-### Bayesian theory
+### Bayesian probability
+베이즈 정리는 새로운 정보를 토대로 어떤 사건이 발생했다는 주장에 대한 신뢰도를 갱신해 나가는 방법을 말한다.    
+
+$$P(H|E) = \frac{P(E|H)P(H)}{P(E)}$$
+
+$P(E)$는 사전 확률, $P(H|E)$는 사후 확률이라 부르며, 베이즈 정리는 근본적으로 사전확률과 사후확률 사이의 관계를 나타내는 정리이다.
+위 식에서 $H$는 Hypothesis로 ‘어떤 사건이 발생했다는 주장’을 의미하고, $E$는 Evidence로 ‘새로운 정보’를 의미한다.
+따라서 $P(H)$는 어떤 사건이 발생했다는 주장에 관한 신뢰도, $P(H|E)$는 새로운 정보를 받은 후 갱신된 신뢰도를 의미한다.
+
+베이지안 관점의 통계학에서는 사전 확률과 같은 경험에 기반한 선험적인, 혹은 불확실성을 내포하는 수치를 기반으로 하고, 거기에 추가 정보를 바탕으로 사전확률을 갱신한다.
+이와 같은 방법은 귀납적 추론 방법이며, 베이지안 관점의 확률론/통계학에서는 추가적인 근거의 확보를 통해 진리로 더 다가갈 수 있다는 철학을 내포하고 있다.
 
 ### Maximum Likelihood
 VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
@@ -133,6 +143,9 @@ $$\begin{aligned}
 
 ## DDPM
 ### Markov Chain
+Markov Chain은 Markov 성질을 갖는 이산시간 확률과정을 의미한다. 여기서 Markov 성질은 특정 상태의 확률($t+1$)이 오직 현재($t$)의 상태에만 의존한다는 것을 의미하고, 이산 확률과정이란 이산적인 시간($0s, 1s, 2s,...$)속에서의 확률적 현상을 의미한다. 
+
+$$P(S_{t+1}|S_t) = P(S_{t+1}|S_1,...,S_t)$$
 
 ### Diffusion Model
 Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward하고, backward에서는 noise를 제거하는 과정을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
@@ -190,3 +203,6 @@ https://avandekleut.github.io/vae/
 # Reference
 ## Paper
 Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf  
+
+## Web
+Bayesian theory : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
