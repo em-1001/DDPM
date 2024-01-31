@@ -160,7 +160,7 @@ $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$�
 $$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)　　\to　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
 이때 주입되는 gaussian noise의 크기는 사전에 정의되며, $\beta_t$로 표기된다. $\beta_t$가 매우 작을 경우 Noising과정의 $q(x_t|x_{t-1})$가 가우시안이면, Denoising과정의 $q(x_{t-1}|x_t)$도 가우시안이라는 것이 이미 증명되었다.   
-$\beta_t$는 $t$가 커질 수록 값이 커지게 되고, 이에 따라 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산(\beta_tI)역시 커지며 Noise가 증가하게 된다. 
+$\beta_t$는 $t$가 커질 수록 값이 커지게 되고, 이에 따라 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산($\beta_tI$)역시 커지며 Noise가 증가하게 된다. 
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
 
