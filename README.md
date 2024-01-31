@@ -148,7 +148,7 @@ Markov Chain은 Markov 성질을 갖는 이산시간 확률과정을 의미한�
 $$P(S_{t+1}|S_t) = P(S_{t+1}|S_1,...,S_t)$$
 
 ### Diffusion Model
-Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward하고, backward에서는 noise를 제거하는 과정을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
+Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward(Noising)하고, backward에서는 이를 다시 복원하는 noise 제거과정(Denoising)을 학습하므로써 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
 
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/b81f9496-b945-41ad-987e-bce1d96098ca"></p>
 
