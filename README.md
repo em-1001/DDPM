@@ -162,6 +162,8 @@ $$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI)　　\t
 이때 주입되는 gaussian noise의 크기는 사전에 정의되며, $\beta_t$로 표기된다. $\beta_t$가 매우 작을 경우 Noising과정의 $q(x_t|x_{t-1})$가 가우시안이면, Denoising과정의 $q(x_{t-1}|x_t)$도 가우시안이라는 것이 이미 증명되었다.   
 $\beta_t$는 $t$가 커질 수록 값이 커지게 되고, 이에 따라 이전 단계($x_{t-1}$)에서 제거되는 정보는 점점 커지고, 분산($\beta_tI$)역시 커지며 Noise가 증가하게 된다. 
 
+23:15
+
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
 
 여기서 $\beta_t$는 매우 작은 값으로 $x_{t-1}$에 $\sqrt{1-\beta_t}$를 곱해줌으로서 이전 단계의 값을 약간 감소시키고 $\beta_tI$로 noise를 조금 추가해 준다. 
