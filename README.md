@@ -177,8 +177,6 @@ q(x_{1:T}|x_0) &= \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\
 &=\frac{q(x_T,x_{T-1},...,x_1,x_0)}{q(x_0)}
 \end{aligned}$$
 
-
-### Loss 
 #### Reverse Process
 앞서 설명했듯이 $\beta_t$가 매우 작을 경우 Reverse Process 역시 가우시안이 된다. 다만 Diffusion Process는 사전에 정의한 $\beta_t$에 의해 각 단계에서의 모수인 평균과 분포가 정의되었지만, Reverse Process는 이를 알지 못하기 때문에 조건부 가우시안 분포의 모수인 평균과 분산을 학습해야 한다. 
 
@@ -186,9 +184,9 @@ $$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tq(x_{t-1}|x_t), 　　p_{\theta}(x_{t
 
 따라서 위 식에서 학습해야하는 대상은 $\mu_{\theta}(x_t,t)$과 $\sum_{\theta}(x_t,t)$로 각 $t$시점의 평균과 분산을 구해야 한다. 
 
-#### Diffusion Loss
+### Diffusion Loss
 
-#### DDPM Loss
+### DDPM Loss
 36:20
 
 
