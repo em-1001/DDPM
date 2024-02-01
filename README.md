@@ -189,7 +189,7 @@ $$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tq(x_{t-1}|x_t), 　　p_{\theta}(x_{t
 #### Diffusion Loss
 
 #### DDPM Loss
-
+36:20
 
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
