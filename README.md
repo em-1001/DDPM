@@ -180,8 +180,15 @@ q(x_{1:T}|x_0) &= \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\
 
 ### DDPM Loss 
 #### Reverse Process
+앞서 설명했듯이 $\beta_t$가 매우 작을 경우 Reverse Process 역시 가우시안이 된다. 다만 Diffusion Process는 사전에 정의한 $\beta_t$에 의해 각 단계에서의 모수인 평균과 분포가 정의되었지만, Reverse Process는 이를 알지 못하기 때문에 조건부 가우시안 분포의 모수인 평균과 분산을 학습해야 한다. 
 
-23:15
+$$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tq(x_{t-1}|x_t), 　　p_{\theta}(x_{t-1}|x_t) = \mathcal{N}\left(x_{t-1}; \mu_{\theta}(x_t,t), \sum_{\theta}(x_t,t)\right)$$
+
+따라서 위 식에서 학습해야하는 대상은 $\mu_{\theta}(x_t,t)$과 $\sum_{\theta}(x_t,t)$로 각 $t$시점의 평균과 분산을 구해야 한다. 
+
+#### Loss
+
+
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
 
@@ -191,6 +198,7 @@ https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기
 
 강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2  
 DDPM 수식 유도 : https://xoft.tistory.com/33  
+DDPM Loss : https://developers-shack.tistory.com/8
 
 ### 통계학
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
