@@ -151,7 +151,7 @@ $$P(S_{t+1}|S_t) = P(S_{t+1}|S_1,...,S_t)$$
 Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward(Noising)하고, backward에서는 이를 다시 복원하는 noise 제거과정(Denoising)을 학습하여 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
 
 Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 Noising과정의 $q(x_t|x_{t-1})$의 값은 사전에 정의한 gaussian noise에 따라 계산하면 되지만, Denoising과정의 $q(x_{t-1}|x_t)$는 $q(x_t|x_{t-1})$로 부터 바로 계산해낼 수 없기 때문이다.   
-모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_{t-1}|x_t)$가 되도록 하는 것이 목표이다. 
+모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_t|x_{t-1})$가 되도록 하는 것이 목표이다. 
 
 #### Diffusion Process
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/b81f9496-b945-41ad-987e-bce1d96098ca"></p>
@@ -185,6 +185,23 @@ $$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tq(x_{t-1}|x_t), 　　p_{\theta}(x_{t
 따라서 위 식에서 학습해야하는 대상은 $\mu_{\theta}(x_t,t)$과 $\sum_{\theta}(x_t,t)$로 각 $t$시점의 평균과 분산을 구해야 한다. 
 
 ### Diffusion Loss
+#### VAE to Diffusion
+$$\begin{aligned}
+-\log p_{\theta}(x_0) &= \int (-\log p_{\theta}(x_0)) \cdot q(x_T|x_0)dx_T　　\because \int q(x_T|x_0)dx_T=1 \\ 
+&= \int \left( -\log \frac{p_{\theta}(x_0,x_T)}{p_{\theta}(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T 　　\because bayes \ rule \\  
+&= \int \left( -\log \frac{p_{\theta}(x_0,x_T)}{p_{\theta}(x_T|x_0)} \cdot \frac{q(x_T|x_0)}{q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T \\ 
+&\le \int \left(-\log \frac{p_{\theta}(x_0,x_T)}{q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T　　\because KL \ divergence > 0, \ ELBO \\ 
+&= \int \left(-\log \frac{\color{red}p_{\theta}(x_0|x_T)\color{black} \cdot p_{\theta}(x_T)}{\color{red}q(x_T|x_0)} \right) 　　\because bayes \ rule \\  
+&= \int \left(-\log \frac{\color{red}p_{\theta}(x_0|x_T)}{\color{red}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T + \int \left(-\log p_{\theta}(x_T) \right) \cdot q(x_T|x_0)dx_T 　　\because separate \ log \\
+&= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[\frac{p_{\theta}(x_0|x_T)}{q(x_T|x_0)} \right] +\mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log p_{\theta}(x_T)\right] 　　\because definition \ of \ expectation 
+\end{aligned}$$
+
+Diffusion Loss를 전개해보면 VAE Loss와 유사하지만 5번째 줄에서 차이가 있다.  VAE Loss에서는 $ELBO$식의 분모가 $p_{\theta}(x_T)$와 결합하지만, Diffusion Loss에서는 $p_{\theta}(x_0|x_T)\color{black}$와 결합한다.   
+결과적으로 전개해서 나온 식을 보면 $p_{\theta}(x_0|x_T)$와 $q(x_T|x_0)$의 KL divergence가 나오고 이는 noising과정의 $q$로부터 $p_{\theta}$가 denoising process를 할 수 있도록 한다.   
+
+
+
+#### Diffusion Loss
 
 ### DDPM Loss
 36:20
