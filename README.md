@@ -201,7 +201,7 @@ $$\begin{aligned}
 \end{aligned}$$  
 
 $$\begin{aligned}
-&　　　　　\ \ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_t|x_{t-1})} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\ 
+&　　　　　\ \ \　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_t|x_{t-1})} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\ 
 &　　　　　　　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_{t-1}|x_t, x_0)}\cdot \frac{\color{red}q(x_{t-1}|x_0)}{\color{red}q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] 　　\because * 　　　　　　　　　　　\\  
 &　　　　　　　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \sum_{t=2}^T \log \frac{q(x_{t-1}|x_0)}{q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\  
 &　　　　　　　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log \frac{q(x_1|x_0)}{\color{red}q(x_T|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\
