@@ -210,6 +210,8 @@ $$\begin{aligned}
 &= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_{0:T})}{q(x_{1:T}|x_0)}\right] 　　\because Notation \\ 
 &= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_T)\color{red}\prod p_{\theta}(x_{t-1}|x_t)}{\color{red}\prod q(x_t|x_{t-1})}\right] 　　\because Below \ Markov \ chain \ property \\ 
 &= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \color{red}\sum_{t=1}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\color{black}\right] 　　\because separating \ to \ summation \ in \ logarithm \\ 
+&= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_t|x_{t-1})} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\ 
+&= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_{t-1}|x_t, x_0)}\cdot \frac{\color{red}q(x_{t-1}|x_0)}{\color{red}q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] 　　\because * \\ 
 \end{aligned}$$
 
 
