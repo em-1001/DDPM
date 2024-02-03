@@ -231,25 +231,47 @@ $L_0$ : VAE의 **Reconstruction Loss**와 대응되며, 확률분포 $q$에서 s
 ### DDPM Loss
 2020년에 발표된 DDPM(Denoising Diffusion Probabilistic Model)은 Diffusion Loss를 아래와 같이 간단하게 재구성하였고, 이렇게 Loss를 간결하게 하면서 성능을 향상시켰다. 
 
-$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha_t}} + \sqrt{1-\tilde{\alpha_t}}\epsilon, t \right)\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
+$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha}_t} + \sqrt{1-\tilde{\alpha}_t}\epsilon, t \right)\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
 
 형태를 보면 ground truth인 $\epsilon$과 예측값인 $\epsilon_{\theta}$의 결과값 과의 차이로 이루어져 있음을 알 수 있다. 결과적으로 DDPM Loss는 각 $t$시점의 noise인 $\epsilon$을 모델이 예측하도록 하는 loss이다. 
 
 그렇다면 Diffusion Loss가 어떻게 위와 같이 간단하게 정리되는지 알아보면, 우선 Regularizaion term인 $L_T$가 제외된다. Regularizaion term의 목적은 $T$ 시점의 latent variable이 특정 분포(가우시안..)을 따르도록 강제하는 역할인데, 1000번의 step을 걸쳐 noise를 주입해본 결과 $T$ 시점의 latent variable이 isotropic gaussian과 매우 유사함이 밝혀졌기 때문이다. 또한 Reconstruction term인 $L_0$도 제외되는데, 이는 전체적으로 $L_0$의 영향력이 적기 때문이다. 
 
-최종적으로 Denoising Process Loss인 $L_{t-1}$만 최소화하면 되는데, Denoising Process term은 gaussian distribution간의 KL divergence이므로 VAE에서처럼 아래와 같이 계산될 수 있다. 
+최종적으로 Denoising Process Loss인 $L_{t-1}$만 최소화하면 되는데, 우선 학습 대상에서 분산 $\sigma$는 제외된다. 이유는 noise parameter $\beta_t$를 이미 정하고 학습시키기 때문에, 베타로 분산을 대신하게 된다. 
+
+$$\sigma_t^2 \cdot I = \tilde{\beta}_t\cdot I = \text{accumulated noise to point } t$$
+
+Denoising Process term은 gaussian distribution간의 KL divergence이므로 VAE에서처럼 아래와 같이 계산될 수 있다. 
 
 $$D_{KL}(p \ || \ q) = \log \frac{\sigma_1}{\sigma_0} + \frac{\sigma_0^2 + (\mu_0 - \mu_1)^2}{2\sigma_1^2} - \frac{1}{2}$$
 
-$\sigma$는 학습 파라미터가 없는 이유?
+이때 앞서 설명했듯이 $\sigma$는 학습 파라미터가 없어 상수가 되기 때문에 loss는 $\sigma$를 제외한 $q$와 $p$간의 평균 $\mu$ 차이로, 아래와 같이 정리된다. 
+
+$$L_{t-1} = \mathbb{E}_ q \left[\frac{1}{2\sigma_t^2} ||\tilde{\mu}_ t(x_t,x_0) - \mu_{\theta}(x_t,t)||^2 \right] + C$$
+
+위 loss를 계산하기 위해서 $q(x_{t-1}|x_t, x_0)$의 평균( $\tilde{\mu}_ t(x_t,x_0)$ )과 $p_{\theta}(x_{t-1}|x_t)$의 평균( $\mu_{\theta}(x_t,t)$ )을 구하면 된다.   
+
+#### Calculate the mean of $q$
+앞서 Diffusion Process에서 보았듯이 $q(x_t|x_{t-1})$를 Reparameterization Trick으로 표현하면 다음과 같다. 
+
+$$q(x_t | x_{t-1}) = \sqrt{1-\beta_t}x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
+
+$$\alpha_t := 1-\beta_t \ and \ \bar{\alpha} := \prod_{s=1}^t \alpha_s$$
+
+기호를 위와 같이 알파로 재정의하면 $x_t$는 아래와 같이 정의된다. 
+
+$$\begin{aligned}
+x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　;\text{where} \ \epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
+&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　　;\text{where} \ \bar{\epsilon}_ {t-2} \ \text{merges two Gaussians} \ (*) \\ 
+\end{aligned}$$
+
+위 식 의미 공부하기 
+
+#### Calculate the mean of $p_{\theta}$
+
 
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
-
-
-
-
-
 강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2  
 DDPM 수식 유도 : https://xoft.tistory.com/33  
 DDPM Loss : https://developers-shack.tistory.com/8
