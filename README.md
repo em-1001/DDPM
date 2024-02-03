@@ -164,7 +164,7 @@ q(x_{1:T}|x_0) &= \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\
 #### Reverse Process
 앞서 설명했듯이 $\beta_t$가 매우 작을 경우 Reverse Process 역시 가우시안이 된다. 다만 Diffusion Process는 사전에 정의한 $\beta_t$에 의해 각 단계에서의 모수인 평균과 분포가 정의되었지만, Reverse Process는 이를 알지 못하기 때문에 조건부 가우시안 분포의 모수인 평균과 분산을 학습해야 한다. 
 
-$$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tq(x_{t-1}|x_t), 　　p_{\theta}(x_{t-1}|x_t) = \mathcal{N}\left(x_{t-1}; \mu_{\theta}(x_t,t), \sum_{\theta}(x_t,t)\right)$$
+$$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t), 　　p_{\theta}(x_{t-1}|x_t) = \mathcal{N}\left(x_{t-1}; \mu_{\theta}(x_t,t), \sum_{\theta}(x_t,t)\right)$$
 
 따라서 위 식에서 학습해야하는 대상은 $\mu_{\theta}(x_t,t)$과 $\sum_{\theta}(x_t,t)$로 각 $t$시점의 평균과 분산을 구해야 한다. 
 
@@ -182,6 +182,7 @@ $$\begin{aligned}
 
 Diffusion Loss를 전개해보면 VAE Loss와 유사하지만 5번째 줄에서 차이가 있다.  VAE Loss에서는 $ELBO$식의 분모가 $p_{\theta}(x_T)$와 결합하지만, Diffusion Loss에서는 $p_{\theta}(x_0|x_T)\color{black}$와 결합한다.   
 결과적으로 전개해서 나온 식을 보면 $p_{\theta}(x_0|x_T)$와 $q(x_T|x_0)$의 KL divergence가 나오고 이는 noising과정의 $q$로부터 $p_{\theta}$가 denoising process를 할 수 있도록 한다.   
+4번째 줄은 VAE와 마찬가지로 intractable한 KL divergence term을 제거하고 $ELBO$만 남긴다.  
 
 
 #### Diffusion Loss
@@ -204,7 +205,6 @@ $$\begin{aligned}
 &　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log \frac{p_{\theta}(x_T)}{\color{red}q(x_T|x_0)} - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log p_{\theta}(x_0|x_1)\right] \\
 \end{aligned}$$
 
-
 $$\begin{aligned}
 † \ q(x_t|x_{t-1}) &= q(x_t|x_{t-1}, x_0) 　　\because Markov \ chain \ property \\
 &= \frac{q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} 　　\because bayes rule \\
@@ -212,6 +212,9 @@ $$\begin{aligned}
 &= \color{red}q(x_{t-1}|x_t,x_0)\color{black} \cdot \frac{q(x_t,x_0)}{q(x_{t-1},x_0)}
 \end{aligned}$$
 
+5번째 줄은 $p_{\theta}$와 $q$가 markov chain임을 이용하여 아래와 같이 표현한 것이다. 
+
+$$p_{\theta}(x_{0:T}) = p_{\theta}(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t) 　　　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
 ### DDPM Loss
 36:20
