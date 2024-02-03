@@ -216,7 +216,7 @@ $$\begin{aligned}
 
 $$p_{\theta}(x_{0:T}) = p_{\theta}(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t) 　　　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
-8번째 줄은 †에서 설명한 것 처럼 Markov chain의 성질을 통해 변환한 것이고, 이 과정은 수식 내 $p$와 $q$ distribution이 같은 condition으로부터 같은 target distribution을 가지도록 나타낼 수 있게 해준 핵심적인 부분이다. 
+8번째 줄은 $†$에서 설명한 것 처럼 Markov chain의 성질을 통해 변환한 것이고, 이 과정은 수식 내 $p$와 $q$ distribution이 같은 condition으로부터 같은 target distribution을 가지도록 나타낼 수 있게 해준 핵심적인 부분이다. 
 
 이렇게 loss를 전개해서 최종적으로 나오는 3개의 term을 정리하면 다음과 같다. 
 
