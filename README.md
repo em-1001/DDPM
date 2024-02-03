@@ -36,7 +36,7 @@ $$\begin{aligned}
 \log(p(x)) &= \int \log(p(x))q_{\phi}(z|x)dz 　 \leftarrow \int q_{\phi}(z|x)dz = 1 \\ 
 &=\int \log\left(\frac{p(x, z)}{p(z|x)}\right)q_{\phi}(z|x)dz 　 \leftarrow p(x) = \frac{p(x, z)}{p(z|x)} \\
 &=\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\cdot\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
-&=\underbrace{\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz}_ {ELBO(\phi)} + \underbrace{\int \log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz}_ {KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)} \\ 
+&=\int \underbrace{\log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz}_ {ELBO(\phi)} + \int \underbrace{\log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz}_ {KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)} \\ 
 \end{aligned}$$
 
 여기서 $KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$ term은 Kullback–Leibler divergence로 두 확률분포 간의 거리($\ge 0$)를 구한다.
@@ -90,7 +90,7 @@ Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있
 
 그럼 이제 $ELBO$를 실제 어떻게 계산하는지 알아보기 전에 $q_{\phi}$를 gaussian distribution $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z)$를 normal distribution $p(z) \sim N(0, 1)$으로 가정한다고 하자. 
 
-우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence가 아래와 같이 계산된다고 수학적으로 알려져있다. 
+우선 Regularization term의 경우 2개의 [가우시안 분포 간의 KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)가 아래와 같이 계산된다고 수학적으로 알려져있다.
 
 $$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left(\sum_1^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T \sum_1^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
 
@@ -229,7 +229,19 @@ $L_0$ : VAE의 **Reconstruction Loss**와 대응되며, 확률분포 $q$에서 s
 
 
 ### DDPM Loss
-36:20
+2020년에 발표된 DDPM(Denoising Diffusion Probabilistic Model)은 Diffusion Loss를 아래와 같이 간단하게 재구성하였고, 이렇게 Loss를 간결하게 하면서 성능을 향상시켰다. 
+
+$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha_t}} + \sqrt{1-\tilde{\alpha_t}}\epsilon, t \right)\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
+
+형태를 보면 ground truth인 $\epsilon$과 예측값인 $\epsilon_{\theta}$의 결과값 과의 차이로 이루어져 있음을 알 수 있다. 결과적으로 DDPM Loss는 각 $t$시점의 noise인 $\epsilon$을 모델이 예측하도록 하는 loss이다. 
+
+그렇다면 Diffusion Loss가 어떻게 위와 같이 간단하게 정리되는지 알아보면, 우선 Regularizaion term인 $L_T$가 제외된다. Regularizaion term의 목적은 $T$ 시점의 latent variable이 특정 분포(가우시안..)을 따르도록 강제하는 역할인데, 1000번의 step을 걸쳐 noise를 주입해본 결과 $T$ 시점의 latent variable이 isotropic gaussian과 매우 유사함이 밝혀졌기 때문이다. 또한 Reconstruction term인 $L_0$도 제외되는데, 이는 전체적으로 $L_0$의 영향력이 적기 때문이다. 
+
+최종적으로 Denoising Process Loss인 $L_{t-1}$만 최소화하면 되는데, Denoising Process term은 gaussian distribution간의 KL divergence이므로 VAE에서처럼 아래와 같이 계산될 수 있다. 
+
+$$D_{KL}(p \ || \ q) = \log \frac{\sigma_1}{\sigma_0} + \frac{\sigma_0^2 + (\mu_0 - \mu_1)^2}{2\sigma_1^2} - \frac{1}{2}$$
+
+$\sigma$는 학습 파라미터가 없는 이유?
 
 
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
