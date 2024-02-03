@@ -216,15 +216,15 @@ $$\begin{aligned}
 
 $$p_{\theta}(x_{0:T}) = p_{\theta}(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t) 　　　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
-8번째 줄은 †에서 설명한 것 처럼 Markov chain의 성질을 통해 변환한 것이고, 이 과정은 수식 내$p$와 $q$ distribution이 같은 condition으로부터 같은 target distribution을 가지도록 나타낼 수 있게 해준 핵심적인 부분이다. 
+8번째 줄은 †에서 설명한 것 처럼 Markov chain의 성질을 통해 변환한 것이고, 이 과정은 수식 내 $p$와 $q$ distribution이 같은 condition으로부터 같은 target distribution을 가지도록 나타낼 수 있게 해준 핵심적인 부분이다. 
 
 이렇게 loss를 전개해서 최종적으로 나오는 3개의 term을 정리하면 다음과 같다. 
 
 $$\mathbb{E}_ q \left[-\log p_{\theta}(x_0)\right] \le \mathbb{E}_ q\left[\underbrace{D_{KL}(q(x_T|x_0) \ || \ p_{\theta}(x_T))}_ {L_T} + \sum_{t>1} \underbrace{D_{KL}(q(x_{t-1}|x_t, x_0) \ || \ p_{\theta}(x_{t-1}|x_t))}_ {L_{t-1}} \underbrace{- \log p_{\theta}(x_0|x_1)}_ {L_0}\right]$$
 
-$L_T$ : VAE의 regularizaion loss와 대응되는 loss로 $x_T$에 대해 $q$와 $p$의 KL Divergence를 최소화 하여 확률분포 차이를 줄인다.  
-$L_{t-1}$ : VAE에는 없는 새로 추가된 loss term으로 Denoising Process Loss라 부르며, $p$와 $q$에서 $x_t$가 주어질 때, $x_{t-1}$이 나올 확률분포의 KL Divergence를 최소화하여 확률분포 차이를 줄인다.  
-$L_0$ : VAE의 reconstruction Loss와 대응되며, 확률분포 $q$에서 sampling했을 때 $- \log p_{\theta}(x_0|x_1)$의 기댓값을 최소화하여 latent $x_1$에서 input인 $x_0$을 추정하는 모델의 파라미터를 최적화한다. 
+$L_T$ : VAE의 **Regularizaion loss**와 대응되는 loss로 $x_T$에 대해 $q$와 $p$의 KL Divergence를 최소화하여 확률분포 차이를 줄인다.  
+$L_{t-1}$ : VAE에는 없는 새로 추가된 loss term으로 **Denoising Process Loss**라 부르며, $p$ 와 $q$ 에서 $x_t$가 주어질 때, $x_{t-1}$이 나올 확률분포의 KL Divergence를 최소화하여 확률분포 차이를 줄인다.  
+$L_0$ : VAE의 **Reconstruction Loss**와 대응되며, 확률분포 $q$에서 sampling했을 때 $- \log p_{\theta}(x_0|x_1)$의 기댓값을 최소화하여 latent $x_1$에서 input인 $x_0$을 추정하는 모델의 파라미터를 최적화한다. 
 
 
 
