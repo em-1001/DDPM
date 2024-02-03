@@ -210,7 +210,7 @@ $$\begin{aligned}
 
 
 $$\begin{aligned}
-† q(x_t|x_{t-1}) &= q(x_t|x_{t-1}, x_0) 　　\because Markov \ chain \ property \\
+† \ q(x_t|x_{t-1}) &= q(x_t|x_{t-1}, x_0) 　　\because Markov \ chain \ property \\
 &= \frac{q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} 　　\because bayes rule \\
 &= \frac{\color{red}q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} \cdot \frac{q(x_t,x_0)}{\color{red}q(x_t,x_0)} \\
 &= \color{red}q(x_{t-1}|x_t,x_0)\color{black} \cdot \frac{q(x_t,x_0)}{q(x_{t-1},x_0)}
