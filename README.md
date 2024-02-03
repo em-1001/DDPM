@@ -36,9 +36,7 @@ $$\begin{aligned}
 \log(p(x)) &= \int \log(p(x))q_{\phi}(z|x)dz 　 \leftarrow \int q_{\phi}(z|x)dz = 1 \\ 
 &=\int \log\left(\frac{p(x, z)}{p(z|x)}\right)q_{\phi}(z|x)dz 　 \leftarrow p(x) = \frac{p(x, z)}{p(z|x)} \\
 &=\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\cdot\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
-&=\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz + \int \log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz \\ 
-\\ 
-&　　　 　 　\color{red}ELBO(\phi)　　　　 　　\color{yellowgreen}KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)
+&=\underbrace{\int \log\left(\frac{p(x, z)}{q_{\phi}(z|x)}\right)q_{\phi}(z|x)dz}_ {ELBO(\phi)} + \underbrace{\int \log\left(\frac{q_{\phi}(z|x)}{p(z|x)}\right)q_{\phi}(z|x)dz}_ {KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)} \\ 
 \end{aligned}$$
 
 여기서 $KL\left(q_{\phi}(z|x) \ || \ p(z|x)\right)$ term은 Kullback–Leibler divergence로 두 확률분포 간의 거리($\ge 0$)를 구한다.
@@ -83,10 +81,8 @@ $$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\
 ### Loss Function 
 결과적으로 ELBO를 최대화 하기 위한 Loss는 아래와 같이 표현된다. 
 
-$$L_i(\phi, \theta, x_i) = -\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] + KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$ 
+$$L_i(\phi, \theta, x_i) = \underbrace{-\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right]}_ \text{Reconstruction  Error} + \underbrace{KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)}_ \text{Regularization}$$ 
 
-Reconstruction  Error : $-\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right]$  
-Regularization : $KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$  
 
 Reconstruction  Error term은 앞서 말했던 MSE(가우시안의 경우)로 계산되는 부분이다. 해당 term을 결론적으로 보면 $x$를 넣었을 때 $x$가 나올 확률에 대한 것이기 때문에 Reconstruction  Error라고 한다. 만약 가정을 베르누이 분포라고 하면 MSE가 아닌 Cross Entropy가 된다. 
 
