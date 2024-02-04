@@ -90,7 +90,7 @@ Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있
 
 그럼 이제 $ELBO$를 실제 어떻게 계산하는지 알아보기 전에 $q_{\phi}$를 gaussian distribution $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z)$를 normal distribution $p(z) \sim N(0, 1)$으로 가정한다고 하자. 
 
-우선 Regularization term의 경우 2개의 [가우시안 분포 간의 KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)가 아래와 같이 계산된다고 수학적으로 알려져있다.
+우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence가 아래와 같이 계산된다고 수학적으로 알려져있다.
 
 $$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left(\sum_1^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T \sum_1^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
 
@@ -388,7 +388,7 @@ https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기
 DDPM 수식 유도 : https://xoft.tistory.com/33  
 DDPM Loss : https://developers-shack.tistory.com/8  
 DDPM Loss : https://junia3.github.io/blog/DDPMproof 
-
+KL wiki : https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
 
 ## Paper
 Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf  
