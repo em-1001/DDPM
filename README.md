@@ -317,7 +317,7 @@ $$\begin{aligned}
 
 정리하면 다음과 같다. 
 
-$$\tilde{\mu}_ t = \frac{1}{\sqrt{\bar{\alpha}_t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon _t \right),　\tilde{\beta_t} = \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t$$
+$$\tilde{\mu}_ t = \frac{1}{\sqrt{\bar{\alpha}_t}} \left(x _t(x _0, \epsilon) - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon _t \right),　\tilde{\beta_t} = \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t$$
 
 
 
