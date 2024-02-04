@@ -98,7 +98,7 @@ $$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left(\sum_1^
 
 $$KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right) = \frac{1}{2}\sum_{j=1}^J\left(\mu_{i,j}^2 + \sigma_{i,j}^2 - \ln(\sigma_{i,j}^2) - 1\right)$$
 
-$J$ : dimension  
+$J$ : $\text{dimension}$  
 $\mu, \sigma$ : $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$
 
 Reconstruction  Error term의 경우 원래라면 아래처럼 기댓값을 구할 때 적분을 해야하지만, 대신 Monte Carlo method로 $L$개를 sampling하여 구한다. 
