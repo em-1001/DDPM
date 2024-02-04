@@ -108,7 +108,7 @@ $$\begin{aligned}
 &\approx \frac{1}{L}\sum_{z^{i,l}} \log\left(p_{\theta}(x_i|z^{i,l})\right)
 \end{aligned}$$
 
-이때 문제는 $q_{\phi}$에서 random으로 sampling을 하기 때문에 backpropagation에서의 편미분이 불가능하다는 것이다. 그래서 이를 해결하기 위해 reparameterization trick을 사용하는데, 이는 gaussian distribution이 gaussian distribution대신 normal distribution에서 sampling한 $\epsilon$에 대해 아래처럼 표현될 수 있다는 점을 이용하여 backpropagation이 가능하도록 한 것이다. 
+이때 문제는 $q_{\phi}$에서 random으로 sampling을 하기 때문에 backpropagation에서의 편미분이 불가능하다는 것이다. 그래서 이를 해결하기 위해 reparameterization trick을 사용하는데, 이는 normal distribution $\mathcal{N}(0,1)$에서 sampling한 $\epsilon$에 대해 아래처럼 표현될 수 있다는 점을 이용하여 backpropagation이 가능하도록 한 것이다. 
 
 $$z^{i,l} \sim \mathcal{N}(\mu_i, \sigma_i^2I) 　\to　 z^{i,l} = \mu_i + \sigma_i^2 \odot \epsilon 　　\epsilon \sim \mathcal{N}(0,1)$$
 
