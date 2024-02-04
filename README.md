@@ -345,7 +345,7 @@ Loss_ {DDPM} &= \mathbb{E}_ {x _ 0,\epsilon} \left[\frac{1}{2\sigma_ t^2} ||\til
 
 논문에서는 coefficient를 제거하여 loss를 계산하는 것이 성능이 더 좋았다고 한다. 
 
-$$Loss_ {DDPM} = \mathbb{E}_ {x _ 0,\epsilon}\left[\left|\left|\epsilon - \epsilon _{\theta}(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon, t) \right|\right|^2 \right]　　* \epsilon \sim \mathcal{N}(0, 1)$$
+$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha}_t} + \sqrt{1-\tilde{\alpha}_t}\epsilon, t \right)\right|\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
 
 
  
