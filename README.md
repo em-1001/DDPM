@@ -271,10 +271,11 @@ x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　�
 
 
 
-https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기 
-강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2  
+https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
+강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2    
 DDPM 수식 유도 : https://xoft.tistory.com/33  
-DDPM Loss : https://developers-shack.tistory.com/8
+DDPM Loss : https://developers-shack.tistory.com/8  
+DDPM Loss : https://junia3.github.io/blog/DDPMproof  
 
 ### 통계학
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
