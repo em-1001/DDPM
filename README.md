@@ -261,11 +261,11 @@ $$\alpha_t := 1-\beta_t \ and \ \bar{\alpha} := \prod_{s=1}^t \alpha_s$$
 기호를 위와 같이 알파로 재정의하면 $x_t$는 아래와 같이 정의된다. 
 
 $$\begin{aligned}
-x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　;\text{where} \ \epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
-&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　　;\text{where} \ \bar{\epsilon}_ {t-2} \ \text{merges two Gaussians} \ (*) \\ 
+x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　;\text{where} \ \epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
+&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　\ 　;\text{where} \ \bar{\epsilon}_ {t-2} \ \text{merges two Gaussians} \ (*) \\ 
 \end{aligned}$$
 
-위 식 의미 공부하기 
+
 
 #### Calculate the mean of $p_{\theta}$
 
