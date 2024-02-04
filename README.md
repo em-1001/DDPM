@@ -231,7 +231,7 @@ $L_0$ : VAE의 **Reconstruction Loss**와 대응되며, 확률분포 $q$에서 s
 ### DDPM Loss
 2020년에 발표된 DDPM(Denoising Diffusion Probabilistic Model)은 Diffusion Loss를 아래와 같이 간단하게 재구성하였고, 이렇게 Loss를 간결하게 하면서 성능을 향상시켰다. 
 
-$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha}_t} + \sqrt{1-\tilde{\alpha}_t}\epsilon, t \right)\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
+$$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\tilde{\alpha}_t} + \sqrt{1-\tilde{\alpha}_t}\epsilon, t \right)\right|\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
 
 형태를 보면 ground truth인 $\epsilon$과 예측값인 $\epsilon_{\theta}$의 결과값 과의 차이로 이루어져 있음을 알 수 있다. 결과적으로 DDPM Loss는 각 $t$시점의 noise인 $\epsilon$을 모델이 예측하도록 하는 loss이다. 
 
