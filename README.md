@@ -320,16 +320,35 @@ $$\begin{aligned}
 $$\tilde{\mu}_ t = \frac{1}{\sqrt{\alpha _t}} \left(x _t(x _0, \epsilon) - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon _t \right),　\tilde{\beta_t} = \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t$$
 
 
-
 #### Calculate the mean of $p_{\theta}$
+지금까지의 내용으로 $Loss$를 표현하면 다음과 같다. 
+
+$$L_ {t-1} = \mathbb{E} _q \left[\frac{1}{2\sigma _t^2} \left|\left|\frac{1}{\sqrt{\alpha _t}} \left(x _t(x _0, \epsilon) - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha} _t}}\epsilon _t \right) - \mu _{\theta}(x_t(x _0,\epsilon),t)\right|\right|^2 \right]$$
+
+여기서 네트워크는 굳이 $x_t(x _0,\epsilon)$를 학습할 필요가 없는데, 그 이유는 time step- $t$에서 이미 input으로 $x_t$가 주어지고, $x _{t-1}$을 만들기 위한 확률분포 예측과정이므로 Diffusion Process에서 stochastic(확률론적)으로 더해졌던 epsilon($\epsilon$)부분만 예측하면 된다. 따라서 epsilon만 학습하도록 $\mu _{\theta}(x _t, t)$를 정의해주면 아래와 같다. 
+
+$$\mu _{\theta}(x _t, t) = \frac{1}{\sqrt{\alpha _t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha} _t}}\epsilon _{\theta}(x _t, t) \right)$$
+
+#### DDPM Loss
+앞서 설명했듯이 $Loss_{DDPM}$는 아래 수식을 계산하면 된다고 했다. 
+
+$$L_{t-1} = \mathbb{E}_ q \left[\frac{1}{2\sigma_t^2} ||\tilde{\mu}_ t(x_t,x_0) - \mu_{\theta}(x_t,t)||^2 \right] + C$$
+
+이는 확률분포 $q$로 sampling했을 때의 기댓값 식이고, $x_0$와 가우시안 분포($\epsilon$)로 sampling하고, 상수 $C$를 제거하면 
+$Loss_{DDPM}$이 다음과 같이 정리된다. 
+
+$$\begin{aligned}  
+Loss_ {DDPM} &= \mathbb{E}_ {x _ 0,\epsilon} \left[\frac{1}{2\sigma_ t^2} ||\tilde{\mu}_ t(x_t,x_0) - \mu_{\theta}(x_t,t)||^2 \right] \\ 
+&= \mathbb{E} _{x _0,\epsilon} \left[\frac{1}{2\sigma _t^2} \left|\left| \frac{1}{\sqrt{\alpha _t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha} _t}}\epsilon _t \right) - \frac{1}{\sqrt{\alpha _t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha} _t}}\epsilon _{\theta}(x _t, t) \right) \right|\right|^2 \right] \\  
+&= \mathbb{E} _{x _0,\epsilon}\left[\frac{\beta _t^2}{2\sigma _t^2 \alpha _t (1 - \bar{\alpha} _t)} \left|\left|\epsilon - \epsilon _{\theta}(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon, t) \right|\right|^2 \right]
+\end{aligned}$$
+
+논문에서는 coefficient를 제거하여 loss를 계산하는 것이 성능이 더 좋았다고 한다. 
+
+$$Loss_ {DDPM} = \mathbb{E}_ {x _ 0,\epsilon}\left[\left|\left|\epsilon - \epsilon _{\theta}(\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon, t) \right|\right|^2 \right]　　\epsilon \sim \mathcal{N}(0, 1)$$
 
 
-
-https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
-강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2    
-DDPM 수식 유도 : https://xoft.tistory.com/33  
-DDPM Loss : https://developers-shack.tistory.com/8  
-DDPM Loss : https://junia3.github.io/blog/DDPMproof  
+ 
 
 ### 통계학
 https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
@@ -364,6 +383,13 @@ https://avandekleut.github.io/vae/
 언데드 언럭(ㅋㄹ ㅈㅌㅍ
 
 # Reference
+https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
+강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2    
+DDPM 수식 유도 : https://xoft.tistory.com/33  
+DDPM Loss : https://developers-shack.tistory.com/8  
+DDPM Loss : https://junia3.github.io/blog/DDPMproof 
+
+
 ## Paper
 Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf  
 
