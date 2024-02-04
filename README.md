@@ -252,6 +252,11 @@ $$L_{t-1} = \mathbb{E}_ q \left[\frac{1}{2\sigma_t^2} ||\tilde{\mu}_ t(x_t,x_0) 
 위 loss를 계산하기 위해서 $q(x_{t-1}|x_t, x_0)$의 평균( $\tilde{\mu}_ t(x_t,x_0)$ )과 $p_{\theta}(x_{t-1}|x_t)$의 평균( $\mu_{\theta}(x_t,t)$ )을 구하면 된다.   
 
 #### Calculate the mean of $q$
+평균을 구하기 앞서 $q(x_{t-1}|x_t,x_0)$를 베이즈 정리를 이용해 아래와 같이 표현할 수 있다. 
+
+$$q(x_{t-1}|x_t,x_0) = q(x_t|x_{t-1},x_0) \frac{q(x_{t-1}|x_0)}{q(x_t|x_0)}$$
+
+이를 계산하기 위해선 $q(x_t|x_0)$와 $q(x_t|x_{t-1})$각각의 분포를 tractable한 가우시안 형태로 알아야 한다.    
 앞서 Diffusion Process에서 보았듯이 $q(x_t|x_{t-1})$를 Reparameterization Trick으로 표현하면 다음과 같다. 
 
 $$q(x_t | x_{t-1}) = \sqrt{1-\beta_t}x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
@@ -263,7 +268,56 @@ $$\alpha_t := 1-\beta_t \ and \ \bar{\alpha} := \prod_{s=1}^t \alpha_s$$
 $$\begin{aligned}
 x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　;\text{where} \ \epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
 &= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　\ 　;\text{where} \ \bar{\epsilon}_ {t-2} \ \text{merges two Gaussians} \ (*) \\ 
+&= \cdots \\ 
+&= \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon
 \end{aligned}$$
+
+결과적으로 $q(x_t|x_0)$는 아래와 같이 표현된다.
+
+$$q(x_t|x_0) = \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t}x_0, (1 - \bar{\alpha}_t)I)$$
+
+이제 $q(x_t|x_0)$와 $q(x_t|x_{t-1})$ 분포를 tractable한 가우시안 형태로 아래와 같이 표현할 수 있다. 
+
+$$\begin{aligned}
+&q(x_t|x_0) \sim \mathcal{N}(\sqrt{\bar{\alpha}_t}x_0, (1 - \bar{\alpha}_t)I) \\ 
+&q(x _t|x _{t-1}) \sim \mathcal{N}(\sqrt{1-\beta_t}x _{t-1}, \beta_tI)
+\end{aligned}$$
+
+이를 이용하여 $q(x_{t-1}|x_t,x_0)$를 계산하면 다음과 같다. 
+
+$$\begin{aligned}
+q(x_{t-1}|x_t,x_0) &= q(x_t|x_{t-1},x_0) \frac{q(x_{t-1}|x_0)}{q(x_t|x_0)} \\ 
+&\propto \exp\left(-\frac{1}{2}\left(\frac{(x_t - \sqrt{\alpha_t}x_{t-1})^2}{\beta_t} + \frac{(x_{t-1} - \sqrt{\bar{\alpha}_ {t-1}}x_0)^2}{1 - \bar{\alpha}_ {t-1}} - \frac{(x_t - \sqrt{\bar{\alpha}_ t}x_{0})^2}{1 - \bar{\alpha}_t}\right) \right) \\ 
+&= \exp\left(-\frac{1}{2}\left(\frac{x _t^2 - 2\sqrt{\alpha _t}x _t x _{t-1} + \alpha _t x _{t-1}^2}{\beta _t} + \frac{x _{t-1}^2 - 2\sqrt{\bar{\alpha} _{t-1}}x _0 x _{t-1} + \bar{\alpha} _{t-1} x _0^2}{1 - \bar{\alpha} _{t-1}} - \frac{(x _t - \sqrt{\bar{\alpha} _t}x _{0})^2}{1 - \bar{\alpha} _t} \right) \right) \\ 
+&= \exp\left(-\frac{1}{2}\left(\left(\frac{\alpha _t}{\beta _t} + \frac{1}{1 - \bar{\alpha} _{t-1}}\right)x _{t-1}^2 - \left(\frac{2\sqrt{\alpha _t}}{\beta _t}x _t + \frac{2\sqrt{\bar{\alpha} _{t-1}}}{1 - \bar{\alpha} _{t-1}}x _0 \right)x _{t-1} + C(x _t, x _0) \right) \right)
+\end{aligned}$$
+
+2번째 줄의 비례식은 가우시안 분포의 확률 밀도 함수(probability density function)에 의해 성립한다. 
+
+$$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \propto e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$
+
+4번째 줄의 $C(x _t, x _0)$는 $x _{t-1}$과 관련이 없기 때문에 상수처리된다.
+
+이제 최종적으로 나온 exponential 내부를 가우시안 pdf 형태인 $-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2$의 형태로 표현하면 평균과 분산은 다음과 같이 정리된다. 
+
+$$\begin{aligned}
+\tilde{\mu}_ t(x_ t,x_ 0) &= \frac{\left(\frac{\sqrt{\alpha _t}}{\beta _t}x _t + \frac{\sqrt{\bar{\alpha} _{t-1}}}{1 - \bar{\alpha} _{t-1}}x _0 \right)}{\left(\frac{\alpha _t}{\beta _t} + \frac{1}{1-\bar{\alpha} _{t-1}}\right)} \\ 
+&= \left(\frac{\sqrt{\alpha _t}}{\beta _t}x _t + \frac{\sqrt{\bar{\alpha} _{t-1}}}{1 - \bar{\alpha} _{t-1}}x _0 \right) \cdot \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t \\ 
+&= \frac{\sqrt{\alpha _t}(1 - \bar{\alpha} _{t-1})}{1 - \bar{\alpha} _t} x _t + \frac{\sqrt{\bar{\alpha} _{t-1}} \beta _t}{1 - \bar{\alpha} _t} x _0
+\end{aligned}$$
+
+$$\tilde{\beta_t} = \frac{1}{\left(\frac{\alpha _t}{\beta _t} + \frac{1}{1-\bar{\alpha} _{t-1}}\right)} = \frac{1}{\left( \frac{\alpha _t - \bar{\alpha} _t + \beta_t}{\beta_t(1-\bar{\alpha} _{t-1})} \right)} = \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t$$ 
+
+추가적으로 $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon$ 이므로 $x_0 = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \sqrt{1 - \bar{\alpha}_t}\epsilon _t)$이다. 이를 $\tilde{\mu}$에 적용하면 아래와 같이 된다. 
+
+$$\begin{aligned}
+\tilde{\mu}_ t &= \frac{\sqrt{\alpha _t}(1 - \bar{\alpha} _{t-1})}{1 - \bar{\alpha} _t} x _t + \frac{\sqrt{\bar{\alpha} _{t-1}} \beta _t}{1 - \bar{\alpha} _t} \cdot \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \sqrt{1 - \bar{\alpha}_t}\epsilon _t) \\ 
+&= \frac{1}{\sqrt{\bar{\alpha}_t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon _t \right)
+\end{aligned}$$
+
+정리하면 다음과 같다. 
+
+$$\tilde{\mu}_ t = \frac{1}{\sqrt{\bar{\alpha}_t}} \left(x _t - \frac{1 - \alpha _t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon _t \right),　\tilde{\beta_t} = \frac{1-\bar{\alpha} _{t-1}}{1-\bar{\alpha} _t} \cdot \beta _t$$
 
 
 
