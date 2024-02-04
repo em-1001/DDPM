@@ -72,7 +72,7 @@ $\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left(p(x_i|g_{\theta}(z))\right)\right
 
 **Final Optimization Problem**
 
-$$\underset{\phi, \theta}{\arg\min} \sum_i \mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] - KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$
+$$\underset{\phi, \theta}{\arg\min} \sum_i -\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] + KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right)$$
 
 결국 위 두 Optimization Problem을 종합하는 식이 위와 같고, 이 식이 $ELBO$를 최대화하는 것과 같게 된다. 
 
