@@ -112,7 +112,7 @@ $$\begin{aligned}
 
 $$z^{i,l} \sim \mathcal{N}(\mu_i, \sigma_i^2I) 　\to　 z^{i,l} = \mu_i + \sigma_i^2 \odot \epsilon 　　\epsilon \sim \mathcal{N}(0,1)$$
 
-그래서 Reconstruction  Error를 정리하면 아래와 같고 Monte Carlo에서의 sampling의 경우 $L=1$로 하나만 sampling하는 경우가 많다. 
+Reconstruction Error를 정리하면 아래와 같고 Monte Carlo에서의 sampling의 경우 $L=1$로 하나만 sampling하는 경우가 많다. 
 
 $$\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right)\right)\right] = \int \log(p_{\theta}(x_i|z))q_{\phi}(z|x_i)dz \approx \frac{1}{L}\sum_{z^{i,l}} \log\left(p_{\theta}(x_i|z^{i,l})\right) \approx \log\left(p_{\theta}(x_i|z^i)\right) 　\leftarrow L=1$$
 
