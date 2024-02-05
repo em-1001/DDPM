@@ -378,7 +378,8 @@ stable-diffusion from scratch 영상을 따라 코딩해보고(직접 구현할 
 VAE -> CLIP -> U-Net -> DDPM 순으로 직접 구현해보기 
 
 ### VAE 구현
-https://avandekleut.github.io/vae/
+https://avandekleut.github.io/vae/  
+https://github.com/hwalsuklee/tensorflow-mnist-VAE/tree/master
 
 언데드 언럭(ㅋㄹ ㅈㅌㅍ
 
