@@ -10,9 +10,7 @@ VAE의 Decoder도 위와 비슷하다. Encoder를 통해 sampling된 데이터 $
 
 
 ### Prior Distribution 
-<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/0ee6e7df-1e77-4dd1-aa91-36afef17a838" width="60%" height="60%"></p>
-
-앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. 위 이미지의 예시처럼 normally-distributed 된 왼쪽에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 오른쪽의 ring 형태가 나오는걸 확인할 수 있다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
+앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. dP를 들어 normally-distributed 된 분포가 있을 때 해당 분포에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 ring 형태의 분포가 나오게 된다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
 
 
 ### Variational Inference
@@ -137,7 +135,7 @@ Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 No
 모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_t|x_{t-1})$가 되도록 하는 것이 목표이다. 
 
 #### Diffusion Process
-<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/d42bde09-519b-4f92-91d6-40a823cb616b" width="83%" height="83%"></p>
+$$x_0 \to x_1 \to x_2 \to x_3 \to x_4 \to \cdots \to x_T$$
 
 $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같으며 Markov Chain을 따른다. 
 
