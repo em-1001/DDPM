@@ -9,8 +9,11 @@ VAE의 Decoder도 위와 비슷하다. Encoder를 통해 sampling된 데이터 $
 다시 돌아와서 결과적으로 VAE의 목적은 모든 training data $x$에 대해 $x$가 나올 확률 $p(x)$를 구하는 것이 목적이다. 이때 training data에 있는 sample과 유사한 sample을 생성하기 위해서 prior 값을 이용하는데, 이 값이 Latent Variable인 $z$가 나올 확률 $p(z)$이고, $p(x)$는 $\int p(x | g_{\theta}(z))p(z) dz = p(x)$로 구해진다. 
 
 
-### Prior Distribution 
-앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. dP를 들어 normally-distributed 된 분포가 있을 때 해당 분포에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 ring 형태의 분포가 나오게 된다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
+### Prior Distribution
+
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/a39d3319-46c4-4dfe-b1bf-8bc8dbfa27e9"></p>
+
+앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. 위 사진으로 예를 들면 왼쪽에 normally-distributed 된 분포가 있을 때 해당 분포에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 오른쪽 처럼 ring 형태의 분포가 나오는 것을 확인할 수 있다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
 
 
 ### Variational Inference
@@ -135,7 +138,7 @@ Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 No
 모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_t|x_{t-1})$가 되도록 하는 것이 목표이다. 
 
 #### Diffusion Process
-$$x_0 \to x_1 \to x_2 \to x_3 \to x_4 \to \cdots \to x_T$$
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/6612ecd8-cfbd-41b8-9589-480be7e1bd04"></p>
 
 $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같으며 Markov Chain을 따른다. 
 
