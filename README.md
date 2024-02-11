@@ -138,7 +138,7 @@ Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 No
 모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_t|x_{t-1})$가 되도록 하는 것이 목표이다. 
 
 #### Diffusion Process
-<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/6612ecd8-cfbd-41b8-9589-480be7e1bd04"></p>
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/671ce90a-f179-446f-8323-5438ef25f688"></p>
 
 $x_0$을 input image라 하고 $x_T$를 Noise라고 하는데, $x_t$에서 $t$가 커질 수록 Noise에 가까워지게 된다. 각 단계에서 다음 단계로 noise를 추가할 때의 관계는 아래와 같으며 Markov Chain을 따른다. 
 
