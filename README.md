@@ -370,18 +370,11 @@ ELBO 식에서 $\log p(x)$가 빠져나오는 이유는 $\int q(z) = 1$이기 �
 
 VAE : https://huidea.tistory.com/296  , https://deepinsight.tistory.com/127 이걸로 낼 공부 ㄱㄱ
 
-레전드 강의2 -> 33:10
 
-
-## 목표 
-stable-diffusion from scratch 영상을 따라 코딩해보고(직접 구현할 수 있는건 직접 구현), 원하는 이미지를 구해서 커스텀 학습시켜보기 
-VAE -> CLIP -> U-Net -> DDPM 순으로 직접 구현해보기 
 
 ### VAE 구현
 https://avandekleut.github.io/vae/  
 https://github.com/hwalsuklee/tensorflow-mnist-VAE/tree/master
-
-언데드 언럭(ㅋㄹ ㅈㅌㅍ
 
 # Reference
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
