@@ -1,4 +1,5 @@
 # Stable Diffusion
+Stable Diffusion의 수학적 이해를 중점으로 공부하였다. Diffusion모델 코드 구현은 [**Umar Jamil**의 영상](https://youtu.be/ZBKpAp_6TGI?si=WqF7e3kSBfKYEtzF)을 보며 그대로 따라해본 것이다. 
 ## VAE
 ### Maximum Likelihood
 VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
