@@ -1,6 +1,22 @@
 # Stable Diffusion
 Stable Diffusion의 수학적 이해를 중점으로 공부하였다. Diffusion모델 코드 구현은 [**Umar Jamil**의 영상](https://youtu.be/ZBKpAp_6TGI?si=WqF7e3kSBfKYEtzF)을 보며 그대로 따라해본 것이다. 
 ## VAE
+### iid
+**iid**는 independent and identically distributed의 줄임말로 확률 변수 $X_1, X_2, \cdots X_n$이 서로 독립이고, 동일한 분포를 따르는 경우를 말한다. 
+
+$p(y | f_{\theta}(x))$이 **iid Condition**을 만족한다고 하면 아래와 같이 표현할 수 있다. 
+
+$$p(y|f_{\theta}(x)) = \prod_i p(y|f_{\theta}(x_i))$$
+
+**iid**가 필요한 이유는 DNN을 학습시키기 위한 조건에 있다. backpropagation을 통해 DNN을 학습시키기 위해 두 가지 가정이 필요한데, 첫 번째는 training sample들에 대한 DNN의 loss는 각 training sample에 대한 loss의 합으로 표현할 수 있어야 한다는 것이다. 두 번째는 loss를 구할때의 구성인자는 ground truth와 네트워크의 최종 prediction 값으로만 이루어져 있어야 한다는 것이다. 예를 들어 네트워크의 중간에 있는 값을 가져와서 loss를 구하는데 사용하면 backpropagation이 이루어지지 않는다는 것이다. 
+
+만약 DNN의 최종 log loss가 $-\log\left(p(y|f_{\theta}(x))\right)$라면 이는 **iid**에 따라 아래와 같이 표현할 수 있고,
+
+$$-\log\left(p(y|f_{\theta}(x))\right) = -\sum_i \log\left(p(y_i|f_{\theta}(x_i))\right)$$
+
+결과적으로 DNN의 loss가 각 training sample에 대한 loss 합으로 표현 되야 한다는 것과, loss가 ground truth와 네트워크의 출력 값으로만 계산되어야 한다는 두 조건을 모두 만족하게 된다. 
+
+
 ### Maximum Likelihood
 VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
 MLE(Maximum Likelihood Estimation)관점에서의 모델의 학습에 대해 먼저 설명하면 input $z$와 target $x$가 있을 때, $f_{\theta}(\cdot)$ 는 모델(가우시안, 베르누이.. )이고, 최종 목표는 target이 나올 확률인 $p(x | f_{\theta}(z))$가 최대가 되도록 하는 $\theta$를 찾는 것이다. MLE에서는 학습전에 학습할 확률분포(가우시안, 베르누이.. )를 먼저 정하고, 모델의 출력은 이 확률 분포를 정하기 위한 파라미터(가우시안의 경우 $\mu, \sigma^2$)라고 해석할 수 있다. 결과적으로 target을 잘 생성하는 모델 파라미터 $\theta$는 $\theta^* = \underset{\theta}{\arg\min} [-\log(p(x | f_{\theta}(z)))]$가 된다. 이렇게 찾은 $\theta^*$는 확률분포를 찾은 것이므로 결과에 대한 sampling이 가능하고, 이 sampling에 따라 다양한 이미지가 생성될 수 있는 것이다.
