@@ -152,7 +152,7 @@ $$P(S_{t+1}|S_t) = P(S_{t+1}|S_1,...,S_t)$$
 Diffusion Model은 input 이미지에 작은 영역에서의 gaussian distribution noise를 여러 단계 Diffusion 시켜서 forward(Noising)하고, backward에서는 이를 다시 복원하는 noise 제거과정(Denoising)을 학습하여 입력 이미지와 유사한 확률 분포를 가진 결과 이미지를 생성할 수 있도록 하는 모델이다. 
 
 Diffusion Model모델은 Denoising과정만 학습하게 되는데, 이유는 Noising과정의 $q(x_t|x_{t-1})$의 값은 사전에 정의한 gaussian noise에 따라 계산하면 되지만, Denoising과정의 $q(x_{t-1}|x_t)$는 $q(x_t|x_{t-1})$로 부터 바로 계산해낼 수 없기 때문이다.   
-모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_t|x_{t-1})$가 되도록 하는 것이 목표이다. 
+모델이 학습해야 하는 값은 $q(x_{t-1}|x_t)$이므로 이를 추종하는 $p_{\theta}$를 상정해 $p_{\theta}(x_{t-1}|x_t) \approx q(x_{t-1}|x_{t})$가 되도록 하는 것이 목표이다. 
 
 #### Diffusion Process
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/671ce90a-f179-446f-8323-5438ef25f688"></p>
