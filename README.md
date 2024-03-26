@@ -185,6 +185,15 @@ $$p_{\theta}(x_{0:T}) = p(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t), 　　p_{\th
 
 따라서 위 식에서 학습해야하는 대상은 $\mu_{\theta}(x_t,t)$과 $\sum_{\theta}(x_t,t)$로 각 $t$시점의 평균과 분산을 구해야 한다. 
 
+$$\begin{aligned}
+p(x_{0:T}) &= \frac{p(x_T)p(x_0, \cdots ,x_T)}{p(x_T)} \\ 
+&= p(x_T)\frac{p(x_{T-1}, x_T)}{p(x_T)}\frac{p(x_{T-2}, x_{T-1}, x_T)}{p(x_{T-1}, x_T)}\cdots\frac{p(x_0, \cdots ,x_T)}{p(x_1, \cdots ,x_{T})} \\ 
+&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1},x_{T}) \cdots p(x_0|x_1, \cdots ,x_T) \\ 
+&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1}) \cdots p(x_0|x_1) 　\leftarrow Markov \ Chain \\  
+&= p(x_T)\prod_{t=1}^Tp(x_{t-1}|x_t)
+\end{aligned}$$
+
+
 ### Diffusion Loss
 #### VAE to Diffusion
 $$\begin{aligned}
