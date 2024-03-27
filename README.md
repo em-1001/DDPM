@@ -171,12 +171,15 @@ $$q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_tI) = \sqrt
 Diffusion Model은 original data $x_0$를 제외한 $x_1, ..., x_T$의 값들을 $x_0$에서 시작한 conditional gaussian에서 가져온 latent variable($x_1=z_1,x_2=z_2,..,x_T=z_T$)로 간주한다. 따라서 Diffusion Process는 conditional gaussian의 joint-distribution으로서, $x_0$를 조건부로한 latent variables($x_{1:T}$)를 생성하는 과정이라 할 수 있다. 
 
 $$\begin{aligned}
-q(x_{1:T}|x_0) &= \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\  
-&=q(x_1|x_0)q(x_2|x_1)q(x_3|x_2)...q(x_T|x_{T-1}) \\ 
-&=\frac{q(x_1,x_0)}{q(x_0)}\frac{q(x_2,x_1)}{q(x_1)}\cdots\frac{q(x_T,x_{T-1})}{q(x_{T-1})} \\   
-&=\frac{q(x_1,x_0)}{q(x_0)}\frac{q(x_2,x_1,x_0)}{q(x_1, x_0)}\cdots\frac{q(x_T,x_{T-1},...,x_1,x_0)}{q(x_{T-1},...,x_0)} 　\leftarrow Markov \ Chain \\ 
-&=\frac{q(x_T,x_{T-1},...,x_1,x_0)}{q(x_0)}
+q(x_{0:T}) &= q(x_T | x_ {T-1}, x_{T-2}, \cdots, x_0)q(x_ {T-1}, x_{T-2}, \cdots, x_0) \\  
+&= q(x_T | x_{T-1})q(x_{T-1}, x_{T-2}, \cdots, x_0) \\  
+&= q(x_T | x_{T-1})q(x_{T-1} | x_{T-2}, x_{T-3}, \cdots, x_0)q(x_{T-2}, x_{T-3}, \cdots, x_0) \\ 
+&= q(x_T | x_{T-1})q(x_{T-1} | x_{T-2})q(x_{T-2}, x_{T-3}, \cdots, x_0) \\
+&　　　　\vdots \\ 
+&= q(x_0) \prod_ {t=1}^T q(x_ t|x_ {t-1}) \\ 
+&\therefore q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})
 \end{aligned}$$
+
 
 #### Reverse Process
 앞서 설명했듯이 $\beta_t$가 매우 작을 경우 Reverse Process 역시 가우시안이 된다. 다만 Diffusion Process는 사전에 정의한 $\beta_t$에 의해 각 단계에서의 모수인 평균과 분포가 정의되었지만, Reverse Process는 이를 알지 못하기 때문에 조건부 가우시안 분포의 모수인 평균과 분산을 학습해야 한다. 
@@ -189,8 +192,8 @@ $$\begin{aligned}
 p(x_{0:T}) &= \frac{p(x_T)p(x_0, \cdots ,x_T)}{p(x_T)} \\ 
 &= p(x_T)\frac{p(x_{T-1}, x_T)}{p(x_T)}\frac{p(x_{T-2}, x_{T-1}, x_T)}{p(x_{T-1}, x_T)}\cdots\frac{p(x_0, \cdots ,x_T)}{p(x_1, \cdots ,x_{T})} \\ 
 &= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1},x_{T}) \cdots p(x_0|x_1, \cdots ,x_T) \\ 
-&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1}) \cdots p(x_0|x_1) 　\leftarrow Markov \ Chain \\  
-&= p(x_T)\prod_{t=1}^Tp(x_{t-1}|x_t)
+&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1}) \cdots p(x_0|x_1) 
+&= p(x_T)\prod_{t=1}^Tp(x_{t-1}|x_t) 
 \end{aligned}$$
 
 
@@ -238,7 +241,7 @@ $$\begin{aligned}
 &= \color{blue}q(x_{t-1}|x_t,x_0)\color{black} \cdot \frac{q(x_t,x_0)}{q(x_{t-1},x_0)}
 \end{aligned}$$
 
-5번째 줄은 $p_{\theta}$와 $q$가 markov chain임을 이용하여 아래와 같이 표현한 것이다. 
+5번째 줄은 앞서 증명하였듯이 $p_{\theta}$와 $q$가 markov chain임을 이용하여 아래와 같이 표현한 것이다. 
 
 $$p_{\theta}(x_{0:T}) = p_{\theta}(x_T)\prod_{t=1}^Tp_{\theta}(x_{t-1}|x_t) 　　　　q(x_{1:T}|x_0) = \prod_ {t=1}^T q(x_ t|x_ {t-1})$$
 
