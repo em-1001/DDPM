@@ -1,5 +1,5 @@
 # Stable Diffusion
-Stable Diffusion의 수학적 이해를 중점으로 공부하였다. Diffusion모델 코드 구현은 [**Umar Jamil**의 영상](https://youtu.be/ZBKpAp_6TGI?si=WqF7e3kSBfKYEtzF)을 보며 그대로 따라해본 것이다. 
+Stable Diffusion의 수학적 이해를 중점으로 공부하였다. Diffusion모델 코드 구현은 **Umar Jamil**의 영상을 보며 그대로 따라해본 것이다. 
 ## VAE
 ### iid
 **iid**는 independent and identically distributed의 줄임말로 확률 변수 $X_1, X_2, \cdots X_n$이 서로 독립이고, 동일한 분포를 따르는 경우를 말한다. 
