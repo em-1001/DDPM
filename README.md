@@ -192,7 +192,7 @@ $$\begin{aligned}
 p(x_{0:T}) &= \frac{p(x_T)p(x_0, \cdots ,x_T)}{p(x_T)} \\ 
 &= p(x_T)\frac{p(x_{T-1}, x_T)}{p(x_T)}\frac{p(x_{T-2}, x_{T-1}, x_T)}{p(x_{T-1}, x_T)}\cdots\frac{p(x_0, \cdots ,x_T)}{p(x_1, \cdots ,x_{T})} \\ 
 &= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1},x_{T}) \cdots p(x_0|x_1, \cdots ,x_T) \\ 
-&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1}) \cdots p(x_0|x_1) 
+&= p(x_T)p(x_{T-1}|x_T)p(x_{T-2}|x_{T-1}) \cdots p(x_0|x_1) \\  
 &= p(x_T)\prod_{t=1}^Tp(x_{t-1}|x_t) 
 \end{aligned}$$
 
