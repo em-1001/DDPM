@@ -218,11 +218,11 @@ Diffusion Loss를 전개해보면 VAE Loss와 유사하지만 5번째 줄에서 
 앞서 VAE Loss를 변형하여 $KL(p_{\theta} \ || \ q)$가 유도되도록 한 아이디어를 이용해서 Diffusion Loss를 처음부터 전개하면 다음과 같다. 
 
 $$\begin{aligned}
-\mathbb{E}_ {x_{1:T} \sim q(x_T|x_0)} \left[-\log p_{\theta}(x_0)\right] &= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{p_{\theta}(x_1,x_2,x_3,...,x_T|x_0)}\right] 　　\because bayes \ rule \\ 
-&= \mathbb{E}_ {x_{1:T} \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{p_{\theta}(x_1,x_2,x_3,...,x_T|x_0)}\cdot \frac{q(x_{1:T}|x_0)}{q(x_{1:T}|x_0)}\right] \\ 
-&\le \mathbb{E}_ {x_{1:T} \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{q(x_{1:T}|x_0)}\right] 　　\because KL \ divergence > 0, \ ELBO \\ 
-&= \mathbb{E}_ {x_{1:T} \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_{0:T})}{q(x_{1:T}|x_0)}\right] 　　\because Notation \\ 
-&= \mathbb{E}_ {x_{1:T} \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_T)\color{blue}\prod p_{\theta}(x_{t-1}|x_t)}{\color{blue}\prod q(x_t|x_{t-1})}\right] 　　\because Below \ Markov \ chain \ property \\ 
+\mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log p_{\theta}(x_0)\right] &= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{p_{\theta}(x_1,x_2,x_3,...,x_T|x_0)}\right] 　　\because bayes \ rule \\ 
+&= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{p_{\theta}(x_1,x_2,x_3,...,x_T|x_0)}\cdot \frac{q(x_{1:T}|x_0)}{q(x_{1:T}|x_0)}\right] \\ 
+&\le \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{q(x_{1:T}|x_0)}\right] 　　\because KL \ divergence > 0, \ ELBO \\ 
+&= \mathbb{E}_ {x_T} \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_{0:T})}{q(x_{1:T}|x_0)}\right] 　　\because Notation \\ 
+&= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_T)\color{blue}\prod p_{\theta}(x_{t-1}|x_t)}{\color{blue}\prod q(x_t|x_{t-1})}\right] 　　\because Below \ Markov \ chain \ property \\ 
 &= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \color{blue}\sum_{t=1}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\color{black}\right] 　　\because separating \ to \ summation \ in \ logarithm \\   
 \end{aligned}$$  
 
