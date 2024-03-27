@@ -288,18 +288,23 @@ $$q(x_{t-1}|x_t,x_0) = q(x_t|x_{t-1},x_0) \frac{q(x_{t-1}|x_0)}{q(x_t|x_0)}$$
 이를 계산하기 위해선 $q(x_t|x_0)$와 $q(x_t|x_{t-1})$각각의 분포를 tractable한 가우시안 형태로 알아야 한다.    
 앞서 Diffusion Process에서 보았듯이 $q(x_t|x_{t-1})$를 Reparameterization Trick으로 표현하면 다음과 같다. 
 
-$$q(x_t | x_{t-1}) = \sqrt{1-\beta_t}x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
+$$x_t = \sqrt{1-\beta_t}x_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}$$
 
 $$\alpha_t := 1-\beta_t \ and \ \bar{\alpha} := \prod_{s=1}^t \alpha_s$$
 
 기호를 위와 같이 알파로 재정의하면 $x_t$는 아래와 같이 정의된다. 
 
 $$\begin{aligned}
-x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　;\text{where} \ \epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
-&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　\ 　;\text{where} \ \bar{\epsilon}_ {t-2} \ \text{merges two Gaussians} \ (*) \\ 
-&= \cdots \\ 
-&= \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon
+x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　　　　　　　;\epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
+&= \sqrt{\alpha_t}(\sqrt{\alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_{t-1}}\epsilon_{t-2}) + \sqrt{1-\alpha_t}\epsilon_{t-1} 　　\because x_{t-1} = \sqrt{\alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_{t-1}}\epsilon_{t-2} \\
+&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{\alpha_t(1-\alpha_{t-1})}\epsilon_{t-2} + \sqrt{1-\alpha_t}\epsilon_{t-1} \\ 
+&= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　\ 　　　　 \ 　　　;\bar{\epsilon}_ {t-2} \ \text{merges two Gaussians}　(*) \\ 
+&\cdots \\ 
+&= \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1 - \bar{\alpha}_t}\epsilon \\ 
 \end{aligned}$$
+
+**(*)** Recall that when we merge two Gaussians with different variance, $\mathcal{N}(0, \sigma_1^2I)$ and $\mathcal{N}(0, \sigma_2^2I)$, the new distribution is $\mathcal{N}(0, (\sigma_1^2+\sigma_2^2)I)$.   
+Usually, we can afford a larger update step when the sample gets noisier, so $\beta_1 < \beta_2 < \cdots < \beta_T$ and therefore $\bar{\alpha_1} > \cdots > \bar{\alpha_T}$.
 
 결과적으로 $q(x_t|x_0)$는 아래와 같이 표현된다.
 
@@ -408,6 +413,7 @@ https://github.com/hwalsuklee/tensorflow-mnist-VAE/tree/master
 # Reference
 https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
 강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2    
+DDPM : https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
 DDPM 수식 유도 : https://xoft.tistory.com/33  
 DDPM Loss : https://developers-shack.tistory.com/8  
 DDPM Loss : https://junia3.github.io/blog/DDPMproof 
