@@ -206,7 +206,7 @@ $$\begin{aligned}
 &\le \int \left(-\log \frac{p_{\theta}(x_0,x_T)}{q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T　　\because KL \ divergence > 0, \ ELBO \\ 
 &= \int \left(-\log \frac{\color{blue}p_{\theta}(x_0|x_T)\color{black} \cdot p_{\theta}(x_T)}{\color{blue}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T 　　\because bayes \ rule \\  
 &= \int \left(-\log \frac{\color{blue}p_{\theta}(x_0|x_T)}{\color{blue}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T + \int \left(-\log p_{\theta}(x_T) \right) \cdot q(x_T|x_0)dx_T 　　\because separate \ log \\
-&= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[\frac{p_{\theta}(x_0|x_T)}{q(x_T|x_0)} \right] +\mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log p_{\theta}(x_T)\right] 　　\because definition \ of \ expectation 
+&= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0|x_T)}{q(x_T|x_0)} \right] +\mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log p_{\theta}(x_T)\right] 　　\because definition \ of \ expectation 
 \end{aligned}$$
 
 Diffusion Loss를 전개해보면 VAE Loss와 유사하지만 5번째 줄에서 차이가 있다.  VAE Loss에서는 $ELBO$식의 분모가 $p_{\theta}(x_T)$와 결합하지만, Diffusion Loss에서는 $p_{\theta}(x_0|x_T)\color{black}$와 결합한다.   
