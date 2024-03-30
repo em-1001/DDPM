@@ -296,7 +296,7 @@ $$\alpha_t := 1-\beta_t \ and \ \bar{\alpha} := \prod_{s=1}^t \alpha_s$$
 기호를 위와 같이 알파로 재정의하면 $x_t$는 아래와 같이 정의된다. 
 
 $$\begin{aligned}
-x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　　　　　　　;\epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
+x_t &= \sqrt{\alpha_t}x_{t-1} + \sqrt{1-\alpha_t}\epsilon_{t-1}　　　　　　　\ 　　\ 　　　　;\epsilon_{t-1}, \epsilon_{t-2},... \sim \mathcal{N}(0,1) \\   
 &= \sqrt{\alpha_t}(\sqrt{\alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_{t-1}}\epsilon_{t-2}) + \sqrt{1-\alpha_t}\epsilon_{t-1} 　　; x_{t-1} = \sqrt{\alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_{t-1}}\epsilon_{t-2} \\
 &= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{\alpha_t(1-\alpha_{t-1})}\epsilon_{t-2} + \sqrt{1-\alpha_t}\epsilon_{t-1} \\ 
 &= \sqrt{\alpha_t \alpha_{t-1}}x_{t-2} + \sqrt{1-\alpha_t \alpha_ {t-1}}\bar{\epsilon}_ {t-2}　　\ 　　　　 \ 　　　;\bar{\epsilon}_ {t-2} \ \text{merges two Gaussians}　(*) \\ 
