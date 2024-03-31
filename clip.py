@@ -1,3 +1,6 @@
+# Reference : https://www.youtube.com/watch?v=ZBKpAp_6TGI
+# Original Code : https://github.com/hkproj/pytorch-stable-diffusion/blob/main/sd/clip.py
+
 import torch
 from torch import nn
 from torch.nn import functional as F
