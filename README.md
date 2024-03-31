@@ -1,6 +1,6 @@
 # Stable Diffusion 
 
-<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_1.png" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_8.png" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_2.png" height="30%" width="30%"></p>
+<p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_1.png" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/7aa52b8f-c193-4e60-9f94-ca42b0ccf661" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_2.png" height="30%" width="30%"></p>
 
 ## VAE
 ### iid
