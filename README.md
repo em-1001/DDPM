@@ -10,7 +10,7 @@ $p(y | f_{\theta}(x))$이 **iid Condition**을 만족한다고 하면 아래와 
 
 $$p(y|f_{\theta}(x)) = \prod_i p(y|f_{\theta}(x_i))$$
 
-**iid**가 필요한 이유는 DNN을 학습시키기 위한 조건에 있다. backpropagation을 통해 DNN을 학습시키기 위해 두 가지 가정이 필요한데, 첫 번째는 training sample들에 대한 DNN의 loss는 각 training sample에 대한 loss의 합으로 표현할 수 있어야 한다는 것이다. 두 번째는 loss를 구할때의 구성인자는 ground truth와 네트워크의 최종 prediction 값으로만 이루어져 있어야 한다는 것이다. 예를 들어 네트워크의 중간에 있는 값을 가져와서 loss를 구하는데 사용하면 backpropagation이 이루어지지 않는다는 것이다. 
+**iid**가 필요한 이유는 DNN을 학습시키기 위한 조건에 있다. backpropagation을 통해 DNN을 학습시키기 위해 두 가지 가정이 필요한데, 첫 번째는 training sample들에 대한 DNN의 loss는 각 training sample에 대한 loss의 합으로 표현할 수 있어야 한다는 것이고, 두 번째는 loss를 구할때의 구성인자는 ground truth와 네트워크의 최종 prediction 값으로만 이루어져 있어야 한다는 것이다. 예를 들어 네트워크의 중간에 있는 값을 가져와서 loss를 구하는데 사용하면 backpropagation이 이루어지지 않는다. 
 
 만약 DNN의 최종 log loss가 $-\log\left(p(y|f_{\theta}(x))\right)$라면 이는 **iid**에 따라 아래와 같이 표현할 수 있고,
 
