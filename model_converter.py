@@ -1,3 +1,6 @@
+# Reference : https://www.youtube.com/watch?v=ZBKpAp_6TGI
+# Original Code : https://github.com/hkproj/pytorch-stable-diffusion/blob/main/sd/model_converter.py
+
 import torch
 
 def load_from_standard_weights(input_file: str, device: str) -> dict[str, torch.Tensor]:
