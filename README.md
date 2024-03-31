@@ -387,9 +387,9 @@ $$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon
 
 # Reference
 ## Web Link
-Bayes Rule : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html#google_vignette    
-probability statistics : http://norman3.github.io/prml/docs/chapter01/0
-MLE : https://angeloyeo.github.io/2020/07/17/MLE.html  
+Bayes Rule : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html#google_vignette      
+probability statistics : http://norman3.github.io/prml/docs/chapter01/0    
+MLE : https://angeloyeo.github.io/2020/07/17/MLE.html   
 VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
 　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
 　 　 https://avandekleut.github.io/vae/    
