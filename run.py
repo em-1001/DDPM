@@ -1,3 +1,5 @@
+# Reference : https://www.youtube.com/watch?v=ZBKpAp_6TGI
+
 import model_loader
 import pipeline
 from PIL import Image
