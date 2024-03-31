@@ -385,45 +385,24 @@ Loss_ {DDPM} &= \mathbb{E}_ {x _ 0,\epsilon} \left[\frac{1}{2\sigma_ t^2} ||\til
 $$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon_{\theta} \left(\sqrt{\bar{\alpha}_t}x _0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t \right)\right|\right|^2 \right]　, \epsilon \sim \mathcal{N}(0,1)$$
 
 
- 
-
-### 통계학
-https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
-
-https://angeloyeo.github.io/2020/09/14/normal_distribution_derivation.html -> exponential 내부의 식 유도전까지 공부함
-
-몬테카를로 시뮬레이션으로 배우는 확률통계 with 파이썬 : https://www.yes24.com/Product/Goods/117709828
-
-#### MLE
-https://modernflow.tistory.com/67  
-https://everyday-tech.tistory.com/entry/%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84-%EC%B6%94%EC%A0%95%EB%B2%95Maximum-Likelihood-Estimation
-
-#### 나이브 베이즈 분류기 
-https://ko.wikipedia.org/wiki/%EB%82%98%EC%9D%B4%EB%B8%8C_%EB%B2%A0%EC%9D%B4%EC%A6%88_%EB%B6%84%EB%A5%98
-
-## Stable-Diffusion 영상  
-ELBO 식 : https://yonghyuc.wordpress.com/2019/09/26/elbo-evidence-of-lower-bound/  
-ELBO 식에서 $\log p(x)$가 빠져나오는 이유는 $\int q(z) = 1$이기 때문인듯. 
-
-VAE : https://huidea.tistory.com/296  , https://deepinsight.tistory.com/127 이걸로 낼 공부 ㄱㄱ
-
-
-
-### VAE 구현
-https://avandekleut.github.io/vae/  
-https://github.com/hwalsuklee/tensorflow-mnist-VAE/tree/master
-
 # Reference
-https://www.youtube.com/watch?v=_JQSMhqXw-4 이거 영상 먼저 보기   
-강의 영상 : https://www.youtube.com/watch?v=uFoGaIVHfoE&list=PLQMw7gFpTGl41kbETcvecwTR3osh7Emub&index=2    
-DDPM : https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
-DDPM 수식 유도 : https://xoft.tistory.com/33  
-DDPM Loss : https://developers-shack.tistory.com/8  
-DDPM Loss : https://junia3.github.io/blog/DDPMproof 
-KL wiki : https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence
+## Web Link
+Bayes Rule : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html#google_vignette    
+MLE : https://angeloyeo.github.io/2020/07/17/MLE.html  
+VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
+　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
+　 　 https://avandekleut.github.io/vae/    
+DDPM : https://youtu.be/H45lF4sUgiE?si=vmEdXqhlLF_zesjO    
+　 　 　https://youtu.be/_JQSMhqXw-4?si=Iifr0t5xFzDSYKky  
+　 　 　https://youtu.be/uFoGaIVHfoE?si=yoj18GZsi41nW84W  
+　 　 　https://youtu.be/ZBKpAp_6TGI?si=NNng1LDGnsDEcKZk  
+　 　 　https://lilianweng.github.io/posts/2021-07-11-diffusion-models/  
+　 　 　https://xoft.tistory.com/33    
+　 　 　https://developers-shack.tistory.com/8    
+　 　 　https://junia3.github.io/blog/DDPMproof  
 
 ## Paper
-Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf  
+Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf   
+VAE : https://arxiv.org/pdf/1312.6114.pdf    
+DDPM : https://arxiv.org/pdf/2006.11239.pdf    
 
-## Web
-Bayesian theory : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html
