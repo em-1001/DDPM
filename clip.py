@@ -38,7 +38,6 @@ class CLIPLayer(nn.Module):
         residue = x
         
         ### SELF ATTENTION ###
-
         # (Batch_Size, Seq_Len, Dim) -> (Batch_Size, Seq_Len, Dim)
         x = self.layernorm_1(x)
         
@@ -48,9 +47,9 @@ class CLIPLayer(nn.Module):
         # (Batch_Size, Seq_Len, Dim) + (Batch_Size, Seq_Len, Dim) -> (Batch_Size, Seq_Len, Dim)
         x += residue
 
+        
         ### FEEDFORWARD LAYER ###
         # Apply a feedforward layer where the hidden dimension is 4 times the embedding dimension. 
-
         residue = x
         # (Batch_Size, Seq_Len, Dim) -> (Batch_Size, Seq_Len, Dim)
         x = self.layernorm_2(x)
