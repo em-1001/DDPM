@@ -1,4 +1,5 @@
-# mode_loader.py
+# Reference : https://www.youtube.com/watch?v=ZBKpAp_6TGI
+# Original Code : https://github.com/hkproj/pytorch-stable-diffusion/blob/main/sd/model_loader.py
 
 from clip import CLIP
 from encoder import VAE_Encoder
