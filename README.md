@@ -3,21 +3,6 @@
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_1.png" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_8.png" height="30%" width="30%">　　<img src="https://github.com/em-1001/Stable-Diffusion/blob/master/Images/cat_2.png" height="30%" width="30%"></p>
 
 ## VAE
-### iid
-**iid**는 independent and identically distributed의 줄임말로 확률 변수 $X_1, X_2, \cdots X_n$이 서로 독립이고, 동일한 분포를 따르는 경우를 말한다. 
-
-$p(y | f_{\theta}(x))$이 **iid Condition**을 만족한다고 하면 아래와 같이 표현할 수 있다. 
-
-$$p(y|f_{\theta}(x)) = \prod_i p(y|f_{\theta}(x_i))$$
-
-**iid**가 필요한 이유는 DNN을 학습시키기 위한 조건에 있다. backpropagation을 통해 DNN을 학습시키기 위해 두 가지 가정이 필요한데, 첫 번째는 training sample들에 대한 DNN의 loss는 각 training sample에 대한 loss의 합으로 표현할 수 있어야 한다는 것이고, 두 번째는 loss를 구할때의 구성인자는 ground truth와 네트워크의 최종 prediction 값으로만 이루어져 있어야 한다는 것이다. 예를 들어 네트워크의 중간에 있는 값을 가져와서 loss를 구하는데 사용하면 backpropagation이 이루어지지 않는다. 
-
-만약 DNN의 최종 log loss가 $-\log\left(p(y|f_{\theta}(x))\right)$라면 이는 **iid**에 따라 아래와 같이 표현할 수 있고,
-
-$$-\log\left(p(y|f_{\theta}(x))\right) = -\sum_i \log\left(p(y_i|f_{\theta}(x_i))\right)$$
-
-결과적으로 DNN의 loss가 각 training sample에 대한 loss 합으로 표현 되야 한다는 것과, loss가 ground truth와 네트워크의 출력 값으로만 계산되어야 한다는 두 조건을 모두 만족하게 된다. 
-
 
 ### Maximum Likelihood
 VAE(Variational Autoencoders)는 Generative model로 Autoencoders와는 반대로 Decoder부분을 학습시키기 위해 만들어졌다. 
@@ -138,7 +123,7 @@ $$\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right
 그러면 $\log\left(p_{\theta}(x_i|z^i)\right)$의 값만 구하면 되는데, 이미지처리의 경우 $p_{\theta}$를 gaussian대신 bernoulli 분포로 정하고 계산한다. 따라서 bernoulli distribution에 따라 구하면 아래와 같이 Cross Entropy의 형태가 나온다. 
 
 $$\begin{aligned}
-\log\left(p_{\theta}(x_i|z^i)\right) &= \log \prod_{j=1}^D p_{\theta}(x_{i,j}|z^i) = \sum_{j=1}^D \log p_{\theta}(x_{i,j}|z^i)　\leftarrow iid \\ 
+\log\left(p_{\theta}(x_i|z^i)\right) &= \log \prod_{j=1}^D p_{\theta}(x_{i,j}|z^i) = \sum_{j=1}^D \log p_{\theta}(x_{i,j}|z^i)　\leftarrow i.i.d \\ 
 &= \sum_{j=1}^D \log p_{i,j}^{x_{i,j}}(1-p_{i,j})^{1-x_{i,j}}　\leftarrow p_{i,j} \circeq network \ output \\ 
 &= \sum_{j=1}^D x_{i,j} \log p_{i,j} + (1-x_{i,j}) \log (1-p_{i,j})　\leftarrow Cross \ entropy
 \end{aligned}$$
