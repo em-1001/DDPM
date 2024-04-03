@@ -192,8 +192,8 @@ $$\begin{aligned}
 &= \int \left( -\log \frac{p_{\theta}(x_0,x_T)}{p_{\theta}(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T 　　\because bayes \ rule \\  
 &= \int \left( -\log \frac{p_{\theta}(x_0,x_T)}{p_{\theta}(x_T|x_0)} \cdot \frac{q(x_T|x_0)}{q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T \\ 
 &\le \int \left(-\log \frac{p_{\theta}(x_0,x_T)}{q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T　　\because KL \ divergence > 0, \ ELBO \\ 
-&= \int \left(-\log \frac{\color{red}p_{\theta}(x_0|x_T)\color{black} \cdot p_{\theta}(x_T)}{\color{red}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T 　　\because bayes \ rule \\  
-&= \int \left(-\log \frac{\color{red}p_{\theta}(x_0|x_T)}{\color{red}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T + \int \left(-\log p_{\theta}(x_T) \right) \cdot q(x_T|x_0)dx_T 　　\because separate \ log \\
+&= \int \left(-\log \frac{\color{blue}p_{\theta}(x_0|x_T)\color{black} \cdot p_{\theta}(x_T)}{\color{blue}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T 　　\because bayes \ rule \\  
+&= \int \left(-\log \frac{\color{blue}p_{\theta}(x_0|x_T)}{\color{blue}q(x_T|x_0)} \right) \cdot q(x_T|x_0)dx_T + \int \left(-\log p_{\theta}(x_T) \right) \cdot q(x_T|x_0)dx_T 　　\because separate \ log \\
 &= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0|x_T)}{q(x_T|x_0)} \right] +\mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log p_{\theta}(x_T)\right] 　　\because definition \ of \ expectation 
 \end{aligned}$$
 
@@ -210,23 +210,23 @@ $$\begin{aligned}
 &= \mathbb{E}_ {x_T \sim q(x_T|x_0)} \left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{p_{\theta}(x_1,x_2,x_3,...,x_T|x_0)}\cdot \frac{q(x_{1:T}|x_0)}{q(x_{1:T}|x_0)}\right] \\ 
 &\le \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_0,x_1,x_2,...,x_T)}{q(x_{1:T}|x_0)}\right] 　　\because KL \ divergence > 0, \ ELBO \\ 
 &= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_{0:T})}{q(x_{1:T}|x_0)}\right] 　　\because Notation \\ 
-&= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_T)\color{red}\prod p_{\theta}(x_{t-1}|x_t)}{\color{red}\prod q(x_t|x_{t-1})}\right] 　　\because Below \ Markov \ chain \ property \\ 
-&= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \color{red}\sum_{t=1}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\color{black}\right] 　　\because separating \ to \ summation \ in \ logarithm \\   
+&= \mathbb{E}_ {x_T \sim q(x_T|x_0)}\left[-\log \frac{p_{\theta}(x_T)\color{blue}\prod p_{\theta}(x_{t-1}|x_t)}{\color{blue}\prod q(x_t|x_{t-1})}\right] 　　\because Below \ Markov \ chain \ property \\ 
+&= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \color{blue}\sum_{t=1}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_t|x_{t-1})}\color{black}\right] 　　\because separating \ to \ summation \ in \ logarithm \\   
 \end{aligned}$$  
 
 $$\begin{aligned}
-&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_t|x_{t-1})} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\ 
-&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{red}q(x_{t-1}|x_t, x_0)}\cdot \frac{\color{red}q(x_{t-1}|x_0)}{\color{red}q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] 　　\because † 　　　\\  
+&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{blue}q(x_t|x_{t-1})} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\ 
+&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{\color{blue}q(x_{t-1}|x_t, x_0)}\cdot \frac{\color{blue}q(x_{t-1}|x_0)}{\color{blue}q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] 　　\because † 　　　\\  
 &　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \sum_{t=2}^T \log \frac{q(x_{t-1}|x_0)}{q(x_t|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\  
-&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log \frac{q(x_1|x_0)}{\color{red}q(x_T|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\
-&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log \frac{p_{\theta}(x_T)}{\color{red}q(x_T|x_0)} - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log p_{\theta}(x_0|x_1)\right] \\
+&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log p_{\theta}(x_T) - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log \frac{q(x_1|x_0)}{\color{blue}q(x_T|x_0)} - \log \frac{p_{\theta}(x_0|x_1)}{q(x_1|x_0)}\right] \\
+&　　　　　\ \ 　　　　　= \mathbb{E}_ {x_{1:T} \sim q(x_{1:T}|x_0)}\left[-\log \frac{p_{\theta}(x_T)}{\color{blue}q(x_T|x_0)} - \sum_{t=2}^T \log \frac{p_{\theta}(x_{t-1}|x_t)}{q(x_{t-1}|x_t, x_0)} - \log p_{\theta}(x_0|x_1)\right] \\
 \end{aligned}$$
 
 $$\begin{aligned}
 † \ q(x_t|x_{t-1}) &= q(x_t|x_{t-1}, x_0) 　　\because Markov \ chain \ property \\
 &= \frac{q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} 　　\because bayes \ rule \\
-&= \frac{\color{red}q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} \cdot \frac{q(x_t,x_0)}{\color{red}q(x_t,x_0)} \\
-&= \color{red}q(x_{t-1}|x_t,x_0)\color{black} \cdot \frac{q(x_t,x_0)}{q(x_{t-1},x_0)}
+&= \frac{\color{blue}q(x_t,x_{t-1},x_0)}{q(x_{t-1},x_0)} \cdot \frac{q(x_t,x_0)}{\color{blue}q(x_t,x_0)} \\
+&= \color{blue}q(x_{t-1}|x_t,x_0)\color{black} \cdot \frac{q(x_t,x_0)}{q(x_{t-1},x_0)}
 \end{aligned}$$
 
 5번째 줄은 앞서 증명하였듯이 $p_{\theta}$와 $q$가 markov chain임을 이용하여 아래와 같이 표현한 것이다. 
