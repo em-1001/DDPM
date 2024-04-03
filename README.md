@@ -123,7 +123,7 @@ $$\mathbb{E}_ {q_{\phi}(z|x_i)} \left[\log\left( p \left(x_i|g_{\theta}(z)\right
 그러면 $\log\left(p_{\theta}(x_i|z^i)\right)$의 값만 구하면 되는데, 이미지처리의 경우 $p_{\theta}$를 gaussian대신 bernoulli 분포로 정하고 계산한다. 따라서 bernoulli distribution에 따라 구하면 아래와 같이 Cross Entropy의 형태가 나온다. 
 
 $$\begin{aligned}
-\log\left(p_{\theta}(x_i|z^i)\right) &= \log \prod_{j=1}^D p_{\theta}(x_{i,j}|z^i) = \sum_{j=1}^D \log p_{\theta}(x_{i,j}|z^i) \\ 
+\log\left(p_{\theta}(x_i|z^i)\right) &= \log \prod_{j=1}^D p_{\theta}(x_{i,j}|z^i) = \sum_{j=1}^D \log p_{\theta}(x_{i,j}|z^i)　\leftarrow i.i.d \\ 
 &= \sum_{j=1}^D \log p_{i,j}^{x_{i,j}}(1-p_{i,j})^{1-x_{i,j}}　\leftarrow p_{i,j} \circeq network \ output \\ 
 &= \sum_{j=1}^D x_{i,j} \log p_{i,j} + (1-x_{i,j}) \log (1-p_{i,j})　\leftarrow Cross \ entropy
 \end{aligned}$$
