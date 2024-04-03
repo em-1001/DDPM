@@ -17,7 +17,7 @@ VAE의 Decoder도 위와 비슷하다. Encoder를 통해 sampling된 데이터 $
 
 <p align="center"><img src="https://github.com/em-1001/Stable-Diffusion/assets/80628552/a39d3319-46c4-4dfe-b1bf-8bc8dbfa27e9"></p>
 
-앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 이에 대한 답은 잘 대표한다는 것이다. 위 사진으로 예를 들면 왼쪽에 normally-distributed 된 분포가 있을 때 해당 분포에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 오른쪽 처럼 ring 형태의 분포가 나오는 것을 확인할 수 있다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
+앞서 말했듯이 $z$는 controller 역할을 하기 때문에 $z$를 잘 조정할 수 있어야 한다. 이때 $z$는 고차원 input에 대한 manifold 상에서의 값들인데, generator의 input으로 들어가기 위해 sampling된 값이 이 manifold 공간을 잘 대표하는가? 라는 질문이 나온다. 위 사진을 보면 왼쪽에 normally-distributed 된 분포가 있을 때 해당 분포에 $g(z) = \frac{z}{10} + \frac{z}{||z||}$를 적용하면 오른쪽 처럼 ring 형태의 분포가 나오는 것을 확인할 수 있다. 이처럼 간단한 변형으로 manifold를 대표할 수 있기 때문에 모델이 DNN 이라면, 학습해야 하는 manifold가 복잡하다 하더라도, DNN의 한 두개의 layer가 manifold를 찾기위한 역할로 사용될 수 있다. 따라서 Prior Distribution을 normal distribution과 같은 간단한 distribution으로 해도 상관없다.  
 
 
 ### Variational Inference
