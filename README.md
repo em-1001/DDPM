@@ -10,7 +10,7 @@ MLE(Maximum Likelihood Estimation)관점에서의 모델의 학습에 대해 먼
 
 VAE의 Decoder도 위와 비슷하다. Encoder를 통해 sampling된 데이터 $z$ (Latent Variable)가 있고 Generator $g_{\theta}(\cdot)$와 Target $x$가 있을 때, training data에 있는 $x$가 나올 확률을 구하는 것을 목적으로 한다. 이때 $z$는 controller로서 생성될 이미지를 조정하는 역할을 할 수 있다. 예를 들면 고양이의 귀여움을 조정하여 더 귀여운 고양이 이미지를 생성하는 것이다.
 
-다시 돌아와서 결과적으로 VAE의 목적은 모든 training data $x$에 대해 $x$가 나올 확률 $p(x)$를 구하는 것이 목적이다. 이때 training data에 있는 sample과 유사한 sample을 생성하기 위해서 prior 값을 이용하는데, 이 값이 Latent Variable인 $z$가 나올 확률 $p(z)$이고, $p(x)$는 $\int p(x | g_{\theta}(z))p(z) dz = p(x)$로 구해진다. 
+다시 돌아와서 결과적으로 VAE의 목적은 모든 training data $x$에 대해 $x$가 나올 확률 $p(x)$를 구하는 것이 목적이다. 이때 training data에 있는 sample과 유사한 sample을 생성하기 위해서 prior 값을 이용하는데, 이 값이 Latent Variable인 $z$가 나올 확률 $p(z)$이고, $p(x)$는 $\int p(x | g_{\theta}(z))p(z) dz = p(x)$로 구해진다. MLE(Maximum Likelihood Estimation)와 MAP(Maximum A Posteriori)에 대한 자세한 내용은 reference에 있다. 
 
 
 ### Prior Distribution
@@ -374,7 +374,7 @@ $$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon
 ## Web Link
 Bayes Rule : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html#google_vignette      
 PRML : http://norman3.github.io/prml/docs/chapter01/0    
-MLE : https://angeloyeo.github.io/2020/07/17/MLE.html   
+MLE, MAP : https://niceguy1575.medium.com/mle%EC%99%80-map%EC%9D%98-%EC%B0%A8%EC%9D%B4-7d2cc0bee9c 
 VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
 　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
 　 　 https://avandekleut.github.io/vae/    
