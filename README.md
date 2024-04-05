@@ -380,12 +380,13 @@ VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c
 　 　 https://avandekleut.github.io/vae/    
 DDPM : https://youtu.be/H45lF4sUgiE?si=vmEdXqhlLF_zesjO    
 　 　 　https://youtu.be/_JQSMhqXw-4?si=Iifr0t5xFzDSYKky  
-　 　 　https://youtu.be/uFoGaIVHfoE?si=yoj18GZsi41nW84W  
-　 　 　https://youtu.be/ZBKpAp_6TGI?si=NNng1LDGnsDEcKZk  
+　 　 　https://youtu.be/uFoGaIVHfoE?si=yoj18GZsi41nW84W    
 　 　 　https://lilianweng.github.io/posts/2021-07-11-diffusion-models/  
 　 　 　https://xoft.tistory.com/33    
 　 　 　https://developers-shack.tistory.com/8    
-　 　 　https://junia3.github.io/blog/DDPMproof  
+　 　 　https://junia3.github.io/blog/DDPMproof      
+Stable Diffusion : https://github.com/hkproj/pytorch-stable-diffusion/tree/main  
+　 &nbsp;　　　 　&nbsp; 　 https://youtu.be/ZBKpAp_6TGI?si=8Ytizix8c5BFRQhr
 
 ## Paper
 Tutorial on Variational Autoencoders : https://arxiv.org/pdf/1606.05908.pdf   
