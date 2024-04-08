@@ -94,9 +94,24 @@ Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있
 
 그럼 이제 $ELBO$를 실제 어떻게 계산하는지 알아보기 전에 $q_{\phi}$를 gaussian distribution $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z)$를 normal distribution $p(z) \sim N(0, 1)$으로 가정한다고 하자. 
 
-우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence가 아래와 같이 계산된다고 수학적으로 알려져있다.
+우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence는 아래와 같이 계산된다고 수학적으로 알려져있다.
 
 $$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left({\sum_1}^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T {\sum_1}^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
+
+$$tr(A) = \sum_{i} A_{ii}$$
+
+이는 KL divergence $D_{KL}(p||q) = \int_x p(x)\log \frac{p(x)}{q(x)}$ 를 구할 때 다변량 정규 분포의 pdf가 아래와 같음을 이용하여 유도된 것으로 자세한 내용은 reference에 있다. 
+
+$$p(x) = \frac{1}{(2\pi)^{k/2} |\sum|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T} {\sum}^{-1} (x - \mu) \right) \\  　　
+\sum = 
+\begin{vmatrix}
+\sigma_{11}^2 & \sigma_{12}^2 & \cdots & \sigma_{1p}^2 \\ 
+\sigma_{21}^2 & \sigma_{22}^2 & \cdots & \sigma_{2p}^2 \\ 
+\vdots & \vdots & \ddots & \vdots \\  
+\sigma_{p1}^2 & \sigma_{p2}^2 & \cdots & \sigma_{pp}^2
+\end{vmatrix}$$
+
+여기서 $\sum$은 공분산 행렬이고, $(x-\mu)^{T} {\sum}^{-1} (x - \mu)$는 마할라노비스 거리(Mahalanobis distance)로 $x$가 평균값 $\mu$에서 얼마나 많은 표준 편차만큼 떨어져 있는가를 나타낸다. 
 
 이에 따라 앞서 가정한대로 KL term을 계산하면 아래와 같이 된다.
 
@@ -374,7 +389,9 @@ $$Loss_{DDPM} = \mathbb{E}_ {x_0,\epsilon} \left[\left|\left|\epsilon - \epsilon
 ## Web Link
 Bayes Rule : https://angeloyeo.github.io/2020/01/09/Bayes_rule.html#google_vignette      
 PRML : http://norman3.github.io/prml/docs/chapter01/0    
-MLE, MAP : https://niceguy1575.medium.com/mle%EC%99%80-map%EC%9D%98-%EC%B0%A8%EC%9D%B4-7d2cc0bee9c    
+MLE, MAP : https://niceguy1575.medium.com/mle%EC%99%80-map%EC%9D%98-%EC%B0%A8%EC%9D%B4-7d2cc0bee9c  
+Mahalanobis distance : https://angeloyeo.github.io/2022/09/28/Mahalanobis_distance.html  
+KL Divergence : https://mr-easy.github.io/2020-04-16-kl-divergence-between-2-gaussian-distributions/    
 VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
 　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
 　 　 https://avandekleut.github.io/vae/    
