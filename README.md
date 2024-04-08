@@ -96,7 +96,7 @@ Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있
 
 우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence가 아래와 같이 계산된다고 수학적으로 알려져있다.
 
-$$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left(\sum_1^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T \sum_1^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
+$$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left({\sum_1}^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T {\sum_1}^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
 
 이에 따라 앞서 가정한대로 KL term을 계산하면 아래와 같이 된다.
 
