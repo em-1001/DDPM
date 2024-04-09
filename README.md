@@ -113,12 +113,16 @@ $$p(x) = \frac{1}{(2\pi)^{k/2} |\sum|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T
 
 여기서 $\sum$은 공분산 행렬이고, $(x-\mu)^{T} {\sum}^{-1} (x - \mu)$는 마할라노비스 거리(Mahalanobis distance)로 $x$가 평균값 $\mu$에서 얼마나 많은 표준 편차만큼 떨어져 있는가를 나타낸다. 
 
-이에 따라 앞서 가정한대로 KL term을 계산하면 아래와 같이 된다.
+이에 따라 앞서 가정한 $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z) \sim N(0, 1)$ 대로 KL term을 계산하면 아래와 같이 된다.
 
-$$KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right) = \frac{1}{2}\sum_{j=1}^J\left(\mu_{i,j}^2 + \sigma_{i,j}^2 - \ln(\sigma_{i,j}^2) - 1\right)$$
+$$\begin{aligned}
+KL\left(q_{\phi}(z|x_i) \ || \ p(z)\right) &= \frac{1}{2} \left\lbrace tr(\sigma_i^2I) + \mu_i^T\mu_i - J + \ln \frac{1}{\prod \sigma_{i,j}^2} \right\rbrace \\ 
+&= \frac{1}{2} \left\lbrace \sum_{j=1}^J \sigma_{i,j}^2 + \sum_{j=1}^J \mu_{i,j}^2 - J - \sum_{j=1}^J \ln(\sigma_{i,j}^2) \right\rbrace \\ 
+&= \frac{1}{2}\sum_{j=1}^J \left(\mu_{i,j}^2 + \sigma_{i,j}^2 - \ln(\sigma_{i,j}^2) - 1\right)
+\end{aligned}$$
 
-$J$ : $\text{dimension}$  
-$\mu, \sigma$ : $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$
+　　　　　　　　　 　　　 $J$ : $\text{dimension}$  
+　　　　　　　　　　 　　 $\mu, \sigma$ : $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$
 
 Reconstruction  Error term의 경우 원래라면 아래처럼 기댓값을 구할 때 적분을 해야하지만, 대신 Monte Carlo method로 $L$개를 sampling하여 구한다. 
 
@@ -392,6 +396,7 @@ PRML : http://norman3.github.io/prml/docs/chapter01/0
 MLE, MAP : https://niceguy1575.medium.com/mle%EC%99%80-map%EC%9D%98-%EC%B0%A8%EC%9D%B4-7d2cc0bee9c  
 Mahalanobis distance : https://angeloyeo.github.io/2022/09/28/Mahalanobis_distance.html  
 KL Divergence : https://mr-easy.github.io/2020-04-16-kl-divergence-between-2-gaussian-distributions/    
+　　　 　　　　 https://simpling.tistory.com/33  
 VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
 　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
 　 　 https://avandekleut.github.io/vae/    
