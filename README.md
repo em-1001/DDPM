@@ -96,14 +96,14 @@ Regularization는 같은 Reconstruction Error를 갖는 $q_{\phi}$가 여럿 있
 
 우선 Regularization term의 경우 2개의 가우시안 분포 간의 KL divergence는 아래와 같이 계산된다고 수학적으로 알려져있다.
 
-$$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left({\sum_1}^{-1}\sum_0\right) + (\mu_1 - \mu_0)^T {\sum_1}^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|\sum_1|}{|\sum_0|}\right]$$
+$$D_{KL}(\mathcal{N}_0 \ || \ \mathcal{N}_1) = \frac{1}{2}\left[ tr\left({Σ_1}^{-1}Σ_0\right) + (\mu_1 - \mu_0)^T {Σ_1}^{-1}(\mu_1 - \mu_0) - k + \ln\frac{|Σ_1|}{|Σ_0|}\right]$$
 
 $$tr(A) = \sum_{i} A_{ii}$$
 
 이는 KL divergence $D_{KL}(p||q) = \int_x p(x)\log \frac{p(x)}{q(x)}$ 를 구할 때 다변량 정규 분포의 pdf가 아래와 같음을 이용하여 유도된 것으로 자세한 내용은 reference에 있다. 
 
-$$p(x) = \frac{1}{(2\pi)^{k/2} |\sum|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T} {\sum}^{-1} (x - \mu) \right) \\  　　
-\sum = \mathbb{E} \left[ (x - \mu) (x - \mu)^T \right] = 
+$$p(x) = \frac{1}{(2\pi)^{k/2} |Σ|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T} {Σ}^{-1} (x - \mu) \right) \\  　　
+Σ = \mathbb{E} \left[ (x - \mu) (x - \mu)^T \right] = 
 \begin{vmatrix}
 \sigma_{11}^2 & \sigma_{12}^2 & \cdots & \sigma_{1p}^2 \\ 
 \sigma_{21}^2 & \sigma_{22}^2 & \cdots & \sigma_{2p}^2 \\ 
@@ -111,7 +111,7 @@ $$p(x) = \frac{1}{(2\pi)^{k/2} |\sum|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T
 \sigma_{p1}^2 & \sigma_{p2}^2 & \cdots & \sigma_{pp}^2
 \end{vmatrix}$$
 
-여기서 $\sum$은 공분산 행렬이고, $(x-\mu)^{T} {\sum}^{-1} (x - \mu)$는 마할라노비스 거리(Mahalanobis distance)로 $x$가 평균값 $\mu$에서 얼마나 많은 표준 편차만큼 떨어져 있는가를 나타낸다. 
+여기서 $Σ$ 은 공분산 행렬이고, $(x-\mu)^{T} {Σ}^{-1} (x - \mu)$는 마할라노비스 거리(Mahalanobis distance)로 $x$가 평균값 $\mu$에서 얼마나 많은 표준 편차만큼 떨어져 있는가를 나타낸다. 
 
 이에 따라 앞서 가정한 $q_{\phi} \sim N(\mu_i, \sigma_i^2I)$, $p(z) \sim N(0, 1)$ 대로 KL term을 계산하면 아래와 같이 된다.
 
