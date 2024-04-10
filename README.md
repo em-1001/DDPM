@@ -103,7 +103,7 @@ $$tr(A) = \sum_{i} A_{ii}$$
 이는 KL divergence $D_{KL}(p||q) = \int_x p(x)\log \frac{p(x)}{q(x)}$ 를 구할 때 다변량 정규 분포의 pdf가 아래와 같음을 이용하여 유도된 것으로 자세한 내용은 reference에 있다. 
 
 $$p(x) = \frac{1}{(2\pi)^{k/2} |\sum|^{1/2}} \exp \left(- \frac{1}{2} (x-\mu)^{T} {\sum}^{-1} (x - \mu) \right) \\  　　
-\sum = 
+\sum = \mathbb{E} \left[ (x - \mu) (x - \mu)^T \right] = 
 \begin{vmatrix}
 \sigma_{11}^2 & \sigma_{12}^2 & \cdots & \sigma_{1p}^2 \\ 
 \sigma_{21}^2 & \sigma_{22}^2 & \cdots & \sigma_{2p}^2 \\ 
@@ -396,7 +396,6 @@ PRML : http://norman3.github.io/prml/docs/chapter01/0
 MLE, MAP : https://niceguy1575.medium.com/mle%EC%99%80-map%EC%9D%98-%EC%B0%A8%EC%9D%B4-7d2cc0bee9c  
 Mahalanobis distance : https://angeloyeo.github.io/2022/09/28/Mahalanobis_distance.html  
 KL Divergence : https://mr-easy.github.io/2020-04-16-kl-divergence-between-2-gaussian-distributions/    
-　　　 　　　　 https://simpling.tistory.com/33    
 Trace Trick : http://en.wikipedia.org/wiki/Estimation_of_covariance_matrices#The_trace_of_a_1_.C3.97_1_matrix  
 VAE : https://youtu.be/o_peo6U7IRM?si=aD8yhUPwGtfP9y7c     
 　 　 https://youtu.be/rNh2CrTFpm4?si=jb_R-gFrYzo9XQ5b  
